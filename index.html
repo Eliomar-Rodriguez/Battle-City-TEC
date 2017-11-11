@@ -8,7 +8,7 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/mdb.css" rel="stylesheet">
     </head>
-    <body>
+    <body style="background-color: antiquewhite">
 
     <div hidden>
         <img id="empty" src="img/empty.png">
@@ -33,13 +33,36 @@
         <img id="enemy3Left" src="img/enemy3Left.png">
         <img id="enemy3Right" src="img/enemy3Right.png">
     </div>
-
-
-    <div class="container">
-        <div align=center>
-            <canvas id="scene" width="700" height="650" style="background-color: black; margin: auto;">Su navegador no soporta canvas</canvas>
+    <!--<embed src="
+            swf/fondoweb.mp3" autostart="true" loop="true"
+           width="2" height="0">
+    </embed>-->
+    <div class="container" >
+        <div class="row">
+            <div class="col-xs-2">
+                <div class="container-fluid">
+                    <br> <br>  <br>  <br> <br>  <br> <br> <br> <br> <br>
+                    <label><b>Tiempo Restante: </b><span id="txtTiempo">02:00</span></label> <br>
+                    <label><b>Vidas Restantes:</b> <span id="txtVidas">3</span></label> <br>
+                    <label><b>Tankes Enemigos: </b><span id="txtTanksEnemy">3</span></label><br>
+                    <label><b>Objetivos Restantes: </b><span id="txtObjetivos">2</span></label><br>
+                    <label><b>Nivel Actual: </b><span id="txtNivel">1</span></label>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <div class="container">
+                    <div align=center>
+                        <canvas id="scene" width="700" height="650" style="background-color: black; margin: auto;">Su navegador no soporta canvas</canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
+
 
     <!--JQuery JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -48,7 +71,7 @@
     <script type="text/javascript" src="librerias/popper.min.js"></script>
     <script type="text/javascript" src="librerias/bootstrap.min.js"></script>
 
-    <script src="library/Concurrent.Thread.js"></script>
+    <script src="library/Concurrent.js"></script>
 
     <script src="js/Tank.js"></script>
     <script src="js/bala.js"></script>
@@ -62,7 +85,7 @@
     <script src="js/tankHeroe.js"></script>
     <script src="js/main_method.js"></script>
 
-    <script src="library/Concurrent.Thread.js"></script>
+    <script src="library/Concurrent.js"></script>
 
 
     </body>

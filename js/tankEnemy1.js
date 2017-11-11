@@ -58,9 +58,10 @@ class tankEnemy1 extends Tank{
         this._vidaTotal--;
         if(this._vidaTotal == 0){
             this._estadoVida = false;
-            this._coordinador.borrarEnemigo(this._posX,this._posY);
+            //apagar hilo
+
+            //this._coordinador.borrarEnemigo(this._posX,this._posY);
             //this.coordinador.ejecutarSonido("destruir");
         }
-
     }
 }
