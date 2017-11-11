@@ -3,8 +3,9 @@
  */
 
 class bloque{
-    constructor(x,y,ID){
-        this._ID = ID;
+    constructor(x,y,parteLogica){
+        this._coordinador = parteLogica;
+        this._ID = this._coordinador.BLOQUENORMAL;
         this._posX = x;
         this._posY = y;
     }
@@ -13,7 +14,7 @@ class bloque{
         return this._ID;
     }
     eliminar(){
-        setObject(this._posX,this._posY,new claseEspacioLibre());
+        this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
         //this.coordinador.ejecutarSonido("bloque");
     }
     get getPosX(){

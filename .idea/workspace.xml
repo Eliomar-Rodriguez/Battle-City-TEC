@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="727cd0c4-3747-4c58-8444-864448e536a6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/mdb.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/librerias/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/librerias/notify.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/librerias/popper.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/bala.js" afterPath="$PROJECT_DIR$/archivos/bala.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/bloque.js" afterPath="$PROJECT_DIR$/archivos/bloque.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/main_method.js" afterPath="$PROJECT_DIR$/archivos/main_method.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/tankHeroe.js" afterPath="$PROJECT_DIR$/archivos/tankHeroe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,41 +26,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="bloque.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/archivos/bloque.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="4" column="12" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="12" />
-              <folding>
-                <element signature="n#!!doc;n#bloque#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main_method.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/archivos/main_method.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="61" column="18" lean-forward="false" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
+            <state relative-caret-position="592">
+              <caret line="113" column="1" lean-forward="true" selection-start-line="113" selection-start-column="1" selection-end-line="113" selection-end-column="1" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
                 <element signature="n#!!block;n#crearMatriz#0" expanded="false" />
                 <element signature="n#!!block;n#generarPosicionAleatoria#0" expanded="false" />
                 <element signature="n#!!block;n#setObject#0" expanded="false" />
+                <element signature="n#!!block;n#getObject#0" expanded="false" />
                 <element signature="n#!!block;n#actualizar#0" expanded="false" />
+                <element signature="e#3965#4705#0" expanded="false" />
+                <element signature="e#4949#5379#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tankHeroe.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tankHeroe.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/archivos/tankHeroe.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="715">
-              <caret line="83" column="52" lean-forward="false" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
+            <state relative-caret-position="340">
+              <caret line="53" column="33" lean-forward="false" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
               <folding>
-                <element signature="n#!!block;n#disparar#0;n#tankHeroe#0" expanded="false" />
+                <element signature="n#!!block;n#moverHeroe#0;n#tankHeroe#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -73,14 +70,26 @@
       <file leaf-file-name="bala.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/archivos/bala.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="15" column="23" lean-forward="false" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+            <state relative-caret-position="444">
+              <caret line="161" column="14" lean-forward="false" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
               <folding>
                 <element signature="n#!!doc;n#bala#0" expanded="false" />
-                <element signature="n#!!block;n#moverBala#0;n#bala#0" expanded="false" />
+                <element signature="e#1356#2376#0" expanded="false" />
+                <element signature="e#2427#3438#0" expanded="false" />
+                <element signature="e#3493#4499#0" expanded="false" />
+                <element signature="e#4552#5556#0" expanded="false" />
                 <element signature="n#!!block;n#destruirObjeto#0;n#bala#0" expanded="false" />
-                <element signature="n#!!block;n#run#0;n#bala#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="49" lean-forward="true" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,10 +123,11 @@
         <option value="$PROJECT_DIR$/clases/bloqueBarrera.js" />
         <option value="$PROJECT_DIR$/clases/bloque.js" />
         <option value="$PROJECT_DIR$/funciones/main_method.js" />
-        <option value="$PROJECT_DIR$/archivos/bloque.js" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/archivos/main_method.js" />
         <option value="$PROJECT_DIR$/archivos/tankHeroe.js" />
+        <option value="$PROJECT_DIR$/archivos/bloque.js" />
+        <option value="$PROJECT_DIR$/archivos/main_method.js" />
+        <option value="$PROJECT_DIR$/archivos/bala.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -171,6 +181,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="librerias" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Proyecto_Lenguajes4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Proyecto_Lenguajes4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Proyecto_Lenguajes4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Proyecto_Lenguajes4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="archivos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -192,6 +230,7 @@
       <recent name="C:\Users\Josue\Documents\TEC\6 Semestre\Lenguajes de Programación\Proyectos\Proyecto 4 - Tank Attack\Proyecto_Lenguajes4\clases" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Josue\Documents\TEC\6 Semestre\Lenguajes de Programación\Proyectos\Proyecto 4 - Tank Attack\Proyecto_Lenguajes4" />
       <recent name="C:\Users\Josue\Documents\TEC\6 Semestre\Lenguajes de Programación\Proyectos\Proyecto 4 - Tank Attack\Proyecto_Lenguajes4\clases" />
     </key>
   </component>
@@ -279,12 +318,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1510357868227</updated>
-      <workItem from="1510357870555" duration="2380000" />
+      <workItem from="1510357870555" duration="3362000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2380000" />
+    <option name="totallyTimeSpent" value="3362000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -321,16 +360,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/archivos/objetivos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="13" column="16" lean-forward="true" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-          <folding>
-            <element signature="n#!!block;n#eliminar#0;n#objetivos#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/archivos/tankEnemy.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -338,14 +367,6 @@
           <folding>
             <element signature="n#!!block;n#run#0;n#tankEnemy#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="47" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -359,29 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/archivos/bala.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="15" column="23" lean-forward="false" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!doc;n#bala#0" expanded="false" />
-            <element signature="n#!!block;n#moverBala#0;n#bala#0" expanded="false" />
-            <element signature="n#!!block;n#destruirObjeto#0;n#bala#0" expanded="false" />
-            <element signature="n#!!block;n#run#0;n#bala#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/archivos/bloque.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="12" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="12" />
-          <folding>
-            <element signature="n#!!doc;n#bloque#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/archivos/espacioLibre.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -390,27 +388,89 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/archivos/main_method.js">
+    <entry file="file://$PROJECT_DIR$/archivos/objetivos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="61" column="18" lean-forward="false" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
+        <state relative-caret-position="170">
+          <caret line="13" column="16" lean-forward="true" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
           <folding>
-            <element signature="e#0#42#0" expanded="false" />
-            <element signature="n#!!block;n#crearMatriz#0" expanded="false" />
-            <element signature="n#!!block;n#generarPosicionAleatoria#0" expanded="false" />
-            <element signature="n#!!block;n#setObject#0" expanded="false" />
-            <element signature="n#!!block;n#actualizar#0" expanded="false" />
+            <element signature="n#!!block;n#eliminar#0;n#objetivos#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/archivos/bloque.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="2" column="3" lean-forward="false" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc;n#bloque#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/archivos/tankHeroe.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="83" column="52" lean-forward="false" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
+        <state relative-caret-position="340">
+          <caret line="53" column="33" lean-forward="false" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
           <folding>
-            <element signature="n#!!block;n#disparar#0;n#tankHeroe#0" expanded="false" />
+            <element signature="n#!!block;n#moverHeroe#0;n#tankHeroe#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/archivos/main_method.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="113" column="1" lean-forward="true" selection-start-line="113" selection-start-column="1" selection-end-line="113" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+            <element signature="n#!!block;n#crearMatriz#0" expanded="false" />
+            <element signature="n#!!block;n#generarPosicionAleatoria#0" expanded="false" />
+            <element signature="n#!!block;n#setObject#0" expanded="false" />
+            <element signature="n#!!block;n#getObject#0" expanded="false" />
+            <element signature="n#!!block;n#actualizar#0" expanded="false" />
+            <element signature="e#3965#4705#0" expanded="false" />
+            <element signature="e#4949#5379#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/archivos/bala.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="161" column="14" lean-forward="false" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc;n#bala#0" expanded="false" />
+            <element signature="e#1356#2376#0" expanded="false" />
+            <element signature="e#2427#3438#0" expanded="false" />
+            <element signature="e#3493#4499#0" expanded="false" />
+            <element signature="e#4552#5556#0" expanded="false" />
+            <element signature="n#!!block;n#destruirObjeto#0;n#bala#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/librerias/notify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/mdb.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="49" lean-forward="true" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>

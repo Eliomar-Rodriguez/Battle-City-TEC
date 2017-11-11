@@ -59,10 +59,17 @@ function generarPosicionAleatoria(){
 function setObject(posX,posY,objetoNuevo){
     matrizLogica[posX][posY] = objetoNuevo;
 }
+/*EXTRAE EL OBJETO QUE ESTÁ EN UNA POSICIÓN [X,Y]*/
 function getObject(posX,posY) {
     return this.matrizLogica[posX][posY];
-};
+}
 
+/*PERMITE CREAR LAS BALAS*/
+function disparar(posX,posY,pertenece,orientacion) {
+    this.setObject(posX,posY,new bala(posX,posY,orientacion,pertenece,this));
+    this.matrizLogica[posX][posY].run();//SE ACTIVA EL HILO PARA QUE LA BALA SE PUEDA MOVER SOLA
+    //this.actualizar();
+};
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     var canvas = document.getElementById('scene');
@@ -109,7 +116,7 @@ function actualizar(){
 crearMatriz();
 
 
-
+/*PERMITE MOVER EL HEROE*/
 document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 32://BARRA ESPACIADORA

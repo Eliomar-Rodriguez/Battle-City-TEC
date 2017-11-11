@@ -159,7 +159,7 @@ class bala{
             //$interval(function () {
             this.moverBala(this._orientacion)
             //},5000);
-            this._coordinador.actualizar();
+            //this._coordinador.actualizar();
         }
 
 
