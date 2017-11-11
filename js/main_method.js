@@ -133,13 +133,13 @@ function actualizar(){
             else if(matrizLogica[x][y].getID == this.BORDE){
                 context.drawImage(document.getElementById('borde'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
+            else if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == this.OBJETIVO){
+            else if(matrizLogica[x][y].getID == this.OBJETIVO){
                 context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
             }
-            if(this.matrizLogica[x][y].getID == this.HEROE){
+            else if(this.matrizLogica[x][y].getID == this.HEROE){
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('heroeLeft'), x*47, y*47);
@@ -155,11 +155,11 @@ function actualizar(){
                         break;
                 }
             }
-            if(matrizLogica[x][y].getID == this.BULLET){
+            else if(matrizLogica[x][y].getID == this.BULLET){
                 debugger;
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
-            if(this.matrizLogica[x][y].getID == this.ENEMY1){
+            else if(this.matrizLogica[x][y].getID == this.ENEMY1){
                 //debugger;
                 //console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
@@ -177,7 +177,7 @@ function actualizar(){
                         break;
                 }
             }
-            if(this.matrizLogica[x][y].getID == this.ENEMY2){
+            else if(this.matrizLogica[x][y].getID == this.ENEMY2){
                 //debugger;
                 console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
@@ -195,9 +195,9 @@ function actualizar(){
                         break;
                 }
             }
-            if(this.matrizLogica[x][y].getID == this.ENEMY3){
+            else if(this.matrizLogica[x][y].getID == this.ENEMY3){
                 //debugger;
-                console.log(matrizLogica[x][y].getOrientacion);
+                //console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('enemy3Left'), x*47, y*47);
@@ -218,7 +218,6 @@ function actualizar(){
 }
 
 function addNewEnemy(){
-    debugger;
     var posX = this.generarPosicionAleatoria();
     var posY = this.generarPosicionAleatoria();
     var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
@@ -228,8 +227,11 @@ function addNewEnemy(){
         else if(tankType == 2)
             this.setObject(posX,posY, new tankEnemy2(posX,posY,2,tankType,this, ENEMY2));
         else
-            this.setObject(posX,posY, new tankEnemy3(posX,posY,this, ENEMY3,2));
+            this.setObject(posX,posY, new tankEnemy3(posX,posY, ENEMY3,this,2));
         this.cantidadEnemigosVivos++;
+
+        debugger;
+        //refreshPantalla = setInterval(actualizar,60);
         hiloEnemy = setInterval(matrizLogica[posX][posY].run(),1000);
         //>>>>>actualizar();
     }

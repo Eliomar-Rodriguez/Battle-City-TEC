@@ -63,9 +63,6 @@ class tankEnemy2 extends Tank{
         }
 
     }
-    generarRandom(limite){
-        return Math.floor((Math.random() * limite) + 1);
-    }
     moverTank(orientacion){
         var x,y,tempValue;
         if(orientacion == this._coordinador.ARRIBA){
@@ -98,6 +95,7 @@ class tankEnemy2 extends Tank{
     /*PERMITE GENERAR UN HILO Y MANTENER EL TANK ENEMIGO MOVIENDOSE EN BUSCA DEL TANK HEROE
     * EL HILO SE TERMINA HASTA QUE EL ESTADO DE VIDA DEL TANK SEA FALSE
     * */
+    /*
     run(){
         try{
             //crear hilo
@@ -133,6 +131,6 @@ class tankEnemy2 extends Tank{
             //SE ACTUALIZA EL ESTADO DE LA MATRIZ GRAFICA
             this._coordinador.actualizar();
         }
-    }
+    }*/
 
 }
