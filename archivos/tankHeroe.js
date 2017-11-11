@@ -3,13 +3,14 @@
  */
 
 class tankHeroe{
-    constructor(x,y,ID){
+    constructor(x,y,parteLogica){
         this._posX = x;
         this._posY = y;
+        this._coordinador = parteLogica;
         this._disparo = false; //DISPARÓ!
         this._vidas = 3;
         this._orientacion = 0;//ARRIBA, VA CAMBIAR CONFORME SE MUEVE
-        this._ID = ID;
+        this._ID = this._coordinador.HEROE;
     }
     get getID(){
         return this._ID;
@@ -52,7 +53,7 @@ class tankHeroe{
     //LISTO - SE DEBE ENVIAR A DONDE SE DESEA MOVER
     moverHeroe(orientacionActual){
         //VA AGREGAR UN ESPACIO VACIO EN DONDE SE ENCONTRABA EL HEROE, O SEA SE VA EMPEZAR A MOVER
-        this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
 
         if(orientacionActual == this._coordinador.ARRIBA){
             this._orientacion = this._coordinador.ARRIBA;
@@ -80,12 +81,13 @@ class tankHeroe{
         }
         /*ACTUALIZA LA POSICIÓN DEL HEROE*/
         this._coordinador.setObject(this._posX,this._posY,this);
-        this._coordinador.actualizar();
+        console.log(this._coordinador.matrizLogica);
+        //this._coordinador.actualizar();
     }
     eliminar(){
         this._vidas--;
         //this.coordinador.ejecutarSonido("bajaVidaHeroe");
-        this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         if(this._vidas > 1){
             this._vidas--;
             this._posX = 5;this._posY = 6;

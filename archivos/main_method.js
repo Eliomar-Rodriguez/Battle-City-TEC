@@ -45,7 +45,7 @@ function crearMatriz() {
         }
     }
     /*SE CREA EL HEROE Y SE COLOCA EN LA MATRIZ*/
-    heroe = new tankHeroe(7,13,HEROE);
+    heroe = new tankHeroe(7,13,this);
     matrizLogica[7][13] = heroe;
     console.log(matrizLogica);
     return matrizLogica;
@@ -59,6 +59,9 @@ function generarPosicionAleatoria(){
 function setObject(posX,posY,objetoNuevo){
     matrizLogica[posX][posY] = objetoNuevo;
 }
+function getObject(posX,posY) {
+    return this.matrizLogica[posX][posY];
+};
 
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
@@ -104,3 +107,25 @@ function actualizar(){
 }
 
 crearMatriz();
+
+
+
+document.onkeydown = function (e) {
+    switch (e.keyCode) {
+        case 32://BARRA ESPACIADORA
+            heroe.disparar();
+            break;
+        case 37://IZQUIERDA
+            heroe.moverHeroe(2);
+            break;
+        case 38://ARRIBA
+            heroe.moverHeroe(0);
+            break;
+        case 39://DERECHA
+            heroe.moverHeroe(3);
+            break;
+        case 40://ABAJO
+            heroe.moverHeroe(1);
+            break;
+    }
+};
