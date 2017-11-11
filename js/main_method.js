@@ -2,14 +2,16 @@
  * Created by Josue on 10/11/2017.
  */
 
+var intervalo;
+
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 3;
 this.nivelActual = 1;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
 this.BORDE = 0; this.BLOQUENORMAL = 1; this.EMPTYSPACE = 2; this.OBJETIVO = 3;
-this.HEROE = 4; this.ENEMY = 5; this.BULLET = 6;//PARA DIBUJAR - ID'S PARA CADA CLASE
-
+this.HEROE = 4; this.ENEMY1 = 5; this.BULLET = 6;//PARA DIBUJAR - ID'S PARA CADA CLASE
+this.ENEMY2 = 7; this.ENEMY3 = 8;
 var BALAHEROE = 0;  var BALAENEMIGO = 1;//BALAS PARA CADA TIPO DE TANKE
 
 var matrizLogica = new Array(tamMatriz);//SE GENERA UN ARREGLO NORMAL -> [] <-
@@ -125,7 +127,7 @@ function actualizar(){
             if(matrizLogica[x][y].getID == this.EMPTYSPACE){
                 context.drawImage(document.getElementById('empty'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == this.BORDE){
+            else if(matrizLogica[x][y].getID == this.BORDE){
                 context.drawImage(document.getElementById('borde'), x*47, y*47);
             }
             if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
@@ -153,10 +155,82 @@ function actualizar(){
             if(matrizLogica[x][y].getID == this.BULLET){
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
+            if(this.matrizLogica[x][y].getID == this.ENEMY1){
+                debugger;
+                console.log(matrizLogica[x][y].getOrientacion);
+                switch (matrizLogica[x][y].getOrientacion){
+                    case 2://IZQUIERDA
+                        context.drawImage(document.getElementById('enemy1Left'), x*47, y*47);
+                        break;
+                    case 0://ARRIBA
+                        context.drawImage(document.getElementById('enemy1Up'), x*47, y*47);
+                        break;
+                    case 1://ABAJO
+                        context.drawImage(document.getElementById('enemy1Down'), x*47, y*47);
+                        break;
+                    case 3://DERECHA
+                        context.drawImage(document.getElementById('enemy1Right'), x*47, y*47);
+                        break;
+                }
+            }
+            if(this.matrizLogica[x][y].getID == this.ENEMY2){
+                debugger;
+                console.log(matrizLogica[x][y].getOrientacion);
+                switch (matrizLogica[x][y].getOrientacion){
+                    case 2://IZQUIERDA
+                        context.drawImage(document.getElementById('enemy2Left'), x*47, y*47);
+                        break;
+                    case 0://ARRIBA
+                        context.drawImage(document.getElementById('enemy2Up'), x*47, y*47);
+                        break;
+                    case 1://ABAJO
+                        context.drawImage(document.getElementById('enemy2Down'), x*47, y*47);
+                        break;
+                    case 3://DERECHA
+                        context.drawImage(document.getElementById('enemy2Right'), x*47, y*47);
+                        break;
+                }
+            }
+            if(this.matrizLogica[x][y].getID == this.ENEMY3){
+                debugger;
+                console.log(matrizLogica[x][y].getOrientacion);
+                switch (matrizLogica[x][y].getOrientacion){
+                    case 2://IZQUIERDA
+                        context.drawImage(document.getElementById('enemy3Left'), x*47, y*47);
+                        break;
+                    case 0://ARRIBA
+                        context.drawImage(document.getElementById('enemy3Up'), x*47, y*47);
+                        break;
+                    case 1://ABAJO
+                        context.drawImage(document.getElementById('enemy3Down'), x*47, y*47);
+                        break;
+                    case 3://DERECHA
+                        context.drawImage(document.getElementById('enemy3Right'), x*47, y*47);
+                        break;
+                }
+            }
         }
     }
 }
 
+function addNewEnemy() {
+    var posX = this.generarPosicionAleatoria();
+    var posY = this.generarPosicionAleatoria();
+    var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
+    if(posX != 0 && posX != this.tamMatriz-1 && posY != 0 && posY != this.tamMatriz-1 && matrizLogica[posX][posY].getID == this.EMPTYSPACE){//BARRERA
+        if(tankType == 1)
+            this.setObject(posX,posY, new tankEnemy(posX,posY,3,tankType,this,5));
+        else if(tankType == 2)
+            this.setObject(posX,posY, new tankEnemy(posX,posY,2,tankType,this, 7));
+        else
+            this.setObject(posX,posY, new tankEnemy(posX,posY,1,tankType,this, 8));
+        this.cantidadEnemigosVivos++;
+        actualizar();
+    }
+    else{
+        this.addNewEnemy();
+    }
+}
 crearMatriz();
 actualizar();
 
@@ -181,4 +255,9 @@ document.onkeydown = function (e) {
             heroe.moverHeroe(1);
             break;
     }
+};
+
+window.onload= function () {
+    debugger;
+    intervalo = setInterval(addNewEnemy, 1000);
 };

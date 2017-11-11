@@ -1,18 +1,20 @@
 /**
  * Created by Josue on 31/10/2017.
  */
-class tankEnemy{
-    constructor(x,y,vidaTotal,velocidad,parteLogica){
-        this._coordinador = parteLogica;
-        this._ID = this._coordinador.ENEMY;
-        this._posX = x;
-        this._posY = y;
+class tankEnemy extends Tank{
+    constructor(x,y,vidaTotal,velocidad,parteLogica,id){
+        super(id, parteLogica, x, y, Math.floor((Math.random() * 4) + 1) - 1, vidaTotal);
         this._estadoVida = true;
-        this._vidaTotal = vidaTotal;
         this._velocidadTanke = velocidad;
     }
     get getID(){
         return this._ID;
+    }
+    get getOrientacion(){
+        return this._orientacion;
+    }
+    set setOrientacion(orientacion){
+        this._orientacion = orientacion;
     }
     get getPosX(){
         return this._posX;
@@ -66,17 +68,25 @@ class tankEnemy{
         return Math.floor((Math.random() * limite) + 1);
     }
     moverTank(orientacion){
+        var x,y,tempValue;
         if(orientacion == this._coordinador.ARRIBA){
-            this._posY = this._posY-1;
+            y = this._posY-1;
         }
-        if(orientacion == this._coordinador.ABAJO){
-            this._posY = this._posY+1;
+        else if(orientacion == this._coordinador.ABAJO){
+            y = this._posY+1;
         }
         if(orientacion == this._coordinador.IZQUIERDA){
-            this._posX = this._posX-1;
+            x = this._posX-1;
         }
-        if(orientacion == this._coordinador.DERECHA){
-            this._posX = this._posX+1;
+        else if(orientacion == this._coordinador.DERECHA){
+            x = this._posX+1;
+        }
+
+        if (matrizLogica[x][y].getID == this._coordinador.EMPTYSPACE){
+            debugger;
+            tempValue = matrizLogica[this._posX][this._posY];
+            matrizLogica[this._posX][this._posY] = matrizLogica[x][y];
+            matrizLogica[x][y] = tempValue;
         }
 
         this._coordinador.getObject(this._posX,this._posY).eliminar();
