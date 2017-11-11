@@ -1,12 +1,17 @@
 class Tank{
-    constructor(ID,parteLogica,x,y,o,v) {
+    constructor(ID,parteLogica,x,y,o) {
         this._ID = ID;
         this._coordinador = parteLogica;
         this._posX = x;
         this._posY = y;
         this._orientacion = o;
-        this._vidas = v;
-        this._parteLogica = parteLogica;
+        this._estadoVida = true;
+    }
+    get getEstadoVida(){
+        return this._estadoVida;
+    }
+    set setEstadoVida(e){
+        this._estadoVida = e;
     }
     get getID() {
         return this._ID;
@@ -19,12 +24,6 @@ class Tank{
     }
     set setCoordinador(c){
         this._coordinador = c;
-    }
-    get getParteLogica() {
-        return this._parteLogica;
-    }
-    set setParteLogica(value) {
-        this._parteLogica = value;
     }
     get getPosX() {
         return this._posX;
@@ -44,9 +43,4 @@ class Tank{
     set setOrientacion(value) {
         this._orientacion = value;
     }
-    get getVidas() {
-        return this._vidas;
-    }
-    set setVidas(value) {
-        this._vidas = value;
-    }}
+}

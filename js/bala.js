@@ -11,7 +11,6 @@ class bala{
         this._orientacion = orientacion;
         this._tipoBala = balaTanke;//BALA PERTENECE A UN TANKE
         this._estadoBala = true;
-        this._listaBalas = [];
     }
     get getOrientacion(){
         return this._orientacion;
@@ -56,13 +55,10 @@ class bala{
         if(orientacion == this._coordinador.ARRIBA){
             this._orientacion = this._coordinador.ARRIBA;
             solicitud = this._coordinador.getObject(this._posX,this._posY-1); // objeto siguiente hacia arriba
-            //this.addBullet([this._posX,this._posY-1]);
             if(solicitud.espacioLibre()){
                 this._posY--;//SIGA MOVIENDOSE
                 this._coordinador.setObject(this._posX,this._posY+1,solicitud);
-
                 this._coordinador.setObject(this._posX,this._posY,this);
-                return;
             }
             if(solicitud.esDestructible()){
                 if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
@@ -141,7 +137,7 @@ class bala{
             solicitud = this._coordinador.getObject(this._posX+1,this._posY);
             if(solicitud.espacioLibre()){
                 this._posX++;
-                this._coordinador.setObject(this._posX,this._posY,this);
+                this._coordinador.setObject(this._posX,this._posY,this);debugger;
                 this._coordinador.setObject(this._posX-1,this._posY,solicitud);
             }
             if(solicitud.esDestructible()){
@@ -169,17 +165,13 @@ class bala{
         //this.coordinador.destruirTankEnemigo(x,y);
         //this.coordinador.ejecutarSonido("destruir");
     }
-    activarHilo(){debugger;
-        this.hilo= setInterval(this.moverBala(this._estadoBala),1000);
-    }
+
     run(){
-        //Concurrent.Thread.create(this.moverBala,this._orientacion);
         while(this._estadoBala){
-            setTimeout(this.moverBala(this._orientacion),2000);
-
-
+            this.moverBala(this._orientacion);
+            this._coordinador.sleep(200);
+            this._coordinador.actualizar();
         }
-        this._coordinador.actualizar();
 
     }
 

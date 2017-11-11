@@ -8,7 +8,7 @@ var refreshPantalla;
 var enemyList = [];
 
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 3;
-this.nivelActual = 1;
+var nivelActual = 1;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
@@ -72,53 +72,59 @@ function getObject(posX,posY) {
 
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
-    //debugger;
-    if(orientacion == this.ARRIBA){
-        if (this.matrizLogica[posX][posY-1]._ID == this.EMPTYSPACE){
-            this.setObject(posX,posY-1,new bala(posX,posY -1,orientacion,pertenece,this));
-            //Concurrent.Thread.create();
-            matrizLogica[posX][posY-1].run();
+    if (orientacion == this.ARRIBA) {
+        if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
+            this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
+            matrizLogica[posX][posY - 1].run();
         }
-        else if (this.matrizLogica[posX][posY-1]._ID == this.BLOQUENORMAL){
-            debugger;
-            setObject(posX,posY-1,new espacioLibre(this));
+        else if (this.matrizLogica[posX][posY - 1]._ID == this.BLOQUENORMAL) {
+            setObject(posX, posY - 1, new espacioLibre(this));
         }
     }
-    else if(orientacion == this.ABAJO){
-        if (this.matrizLogica[posX][posY+1]._ID == this.EMPTYSPACE){
-            this.setObject(posX,posY+1,new bala(posX,posY +1,orientacion,pertenece,this));
-            this.matrizLogica[posX][posY+1].run();
+    else if (orientacion == this.ABAJO) {
+        if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
+            this.setObject(posX, posY + 1, new bala(posX, posY + 1, orientacion, pertenece, this));
+            this.matrizLogica[posX][posY + 1].run();
         }
-        else if(this.matrizLogica[posX][posY+1]._ID == this.BLOQUENORMAL){
-            this.setObject(posX,posY+1,new espacioLibre(this));
-        }
-    }
-    else if(orientacion == this.IZQUIERDA){
-        if (this.matrizLogica[posX-1][posY]._ID == this.EMPTYSPACE){
-            this.setObject(posX-1,posY,new bala(posX-1,posY,orientacion,pertenece,this));
-            this.matrizLogica[posX-1][posY].run();
-        }
-        else if(this.matrizLogica[posX-1][posY]._ID == this.BLOQUENORMAL){
-            this.setObject(posX-1,posY,new espacioLibre(this));
+        else if (this.matrizLogica[posX][posY + 1]._ID == this.BLOQUENORMAL) {
+            this.setObject(posX, posY + 1, new espacioLibre(this));
         }
     }
-    else if(orientacion == this.DERECHA){
-        if (this.matrizLogica[posX+1][posY]._ID == this.EMPTYSPACE){
-            this.setObject(posX+1,posY,new bala(posX+1,posY,orientacion,pertenece,this));
-            this.matrizLogica[posX+1][posY].run();
+    else if (orientacion == this.IZQUIERDA) {
+        if (this.matrizLogica[posX - 1][posY]._ID == this.EMPTYSPACE) {
+            this.setObject(posX - 1, posY, new bala(posX - 1, posY, orientacion, pertenece, this));
+            this.matrizLogica[posX - 1][posY].run();
         }
-        else if(this.matrizLogica[posX+1][posY]._ID == this.BLOQUENORMAL){
-            this.setObject(posX+1,posY,new espacioLibre(this));
+        else if (this.matrizLogica[posX - 1][posY]._ID == this.BLOQUENORMAL) {
+            this.setObject(posX - 1, posY, new espacioLibre(this));
+        }
+    }
+    else if (orientacion == this.DERECHA) {
+        if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
+            this.setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
+            this.matrizLogica[posX + 1][posY].run();
+        }
+        else if (this.matrizLogica[posX + 1][posY]._ID == this.BLOQUENORMAL) {
+            this.setObject(posX + 1, posY, new espacioLibre(this));
         }
     }
     //>>>>this.actualizar();
+}
+
+function sleep(milliseconds) {
+    let start = new Date().getTime();
+    for (let i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
 }
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     var canvas = document.getElementById('scene');
     var context = canvas.getContext('2d');
 
-    for(x = 0;x<tamMatriz;x++){
+    for(var x = 0;x<tamMatriz;x++){
 
         for(var y=0;y<tamMatriz;y++){
             if(matrizLogica[x][y].getID == this.EMPTYSPACE){
@@ -150,6 +156,7 @@ function actualizar(){
                 }
             }
             if(matrizLogica[x][y].getID == this.BULLET){
+                debugger;
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
             if(this.matrizLogica[x][y].getID == this.ENEMY1){
@@ -217,15 +224,14 @@ function addNewEnemy(){
     var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
     if(posX != 0 && posX != this.tamMatriz-1 && posY != 0 && posY != this.tamMatriz-1 && matrizLogica[posX][posY].getID == this.EMPTYSPACE){//BARRERA
         if(tankType == 1)
-            this.setObject(posX,posY, new tankEnemy(posX,posY,3,tankType,this,5));
+            this.setObject(posX,posY, new tankEnemy1(posX,posY,tankType,this,ENEMY1));// listo
         else if(tankType == 2)
-            this.setObject(posX,posY, new tankEnemy(posX,posY,2,tankType,this, 7));
+            this.setObject(posX,posY, new tankEnemy2(posX,posY,2,tankType,this, ENEMY2));
         else
-            this.setObject(posX,posY, new tankEnemy(posX,posY,1,tankType,this, 8));
-        cantidadEnemigosVivos++;
-        //>>>>actualizar();
-
+            this.setObject(posX,posY, new tankEnemy3(posX,posY,this, ENEMY3,2));
+        this.cantidadEnemigosVivos++;
         hiloEnemy = setInterval(matrizLogica[posX][posY].run(),1000);
+        //>>>>>actualizar();
     }
     else{
         this.addNewEnemy();
@@ -239,7 +245,6 @@ crearMatriz();
 document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 32://BARRA ESPACIADORA
-            debugger;
             heroe.disparar();
             break;
         case 37://IZQUIERDA

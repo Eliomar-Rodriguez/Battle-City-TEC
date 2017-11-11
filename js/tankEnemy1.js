@@ -1,10 +1,9 @@
 /**
  * Created by Josue on 31/10/2017.
  */
-class tankEnemy extends Tank{
-    constructor(x,y,vidaTotal,velocidad,parteLogica,id){
-        super(id, parteLogica, x, y, Math.floor((Math.random() * 4) + 1) - 1, vidaTotal);
-        this._estadoVida = true;
+class tankEnemy1 extends Tank{
+    constructor(x,y,velocidad,parteLogica,id){
+        super(id, parteLogica, x, y, Math.floor((Math.random() * 4) + 1) - 1);
         this._velocidadTanke = velocidad;
     }
     get getID(){
@@ -167,7 +166,6 @@ class tankEnemy extends Tank{
 
             //SE ACTUALIZA EL ESTADO DE LA MATRIZ GRAFICA
             //>>>>>this._coordinador.actualizar();
-
         }
     }
 
