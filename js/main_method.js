@@ -137,3 +137,7 @@ document.onkeydown = function (e) {
             break;
     }
 };
+
+setInterval(function(){
+    getObject(5,3);
+}, 3000);
