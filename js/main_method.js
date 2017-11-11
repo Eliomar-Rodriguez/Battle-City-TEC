@@ -7,8 +7,8 @@ this.nivelActual = 1;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
-var BORDE = 0; var BLOQUENORMAL = 1; var EMPTYSPACE = 2; var OBJETIVO = 3;
-var HEROE = 4; var ENEMY = 5; var BULLET = 6;//PARA DIBUJAR - ID'S PARA CADA CLASE
+this.BORDE = 0; this.BLOQUENORMAL = 1; this.EMPTYSPACE = 2; this.OBJETIVO = 3;
+this.HEROE = 4; this.ENEMY = 5; this.BULLET = 6;//PARA DIBUJAR - ID'S PARA CADA CLASE
 
 var BALAHEROE = 0;  var BALAENEMIGO = 1;//BALAS PARA CADA TIPO DE TANKE
 
@@ -25,10 +25,10 @@ function crearMatriz() {
         matrizLogica[x] = new Array(tamMatriz);//SE HACE ASÍ PARA PODER CREAR UNA MATRIZ DIMENSIONAL -> [][] <-
         for(var y = 0; y < tamMatriz; y++){
             if(x == tamMatriz -1 || y == tamMatriz - 1 || x == 0 || y == 0){
-                matrizLogica[x][y] = new bloqueBarrera(BORDE); //SE CREA UN ELEMENTO BARRERA
+                matrizLogica[x][y] = new bloqueBarrera(this); //SE CREA UN ELEMENTO BARRERA
             }
             else{
-                matrizLogica[x][y] = new espacioLibre(EMPTYSPACE);//LOS DEMÁS ELEMENTOS SERÁN ESPACIOS VACÍOS
+                matrizLogica[x][y] = new espacioLibre(this);//LOS DEMÁS ELEMENTOS SERÁN ESPACIOS VACÍOS
             }
         }
     }
@@ -66,6 +66,7 @@ function getObject(posX,posY) {
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
     this.setObject(posX,posY,new bala(posX,posY,orientacion,pertenece,this));
+    debugger;
     this.matrizLogica[posX][posY].run();//SE ACTIVA EL HILO PARA QUE LA BALA SE PUEDA MOVER SOLA
     this.actualizar();
 }
@@ -76,20 +77,20 @@ function actualizar(){
 
     for(x = 0;x<tamMatriz;x++){
 
-        for(var y=0;y<tamMatriz;y++){debugger;
-            if(matrizLogica[x][y].getID == EMPTYSPACE){
+        for(var y=0;y<tamMatriz;y++){
+            if(matrizLogica[x][y].getID == this.EMPTYSPACE){
                 context.drawImage(document.getElementById('empty'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == BORDE){
+            if(matrizLogica[x][y].getID == this.BORDE){
                 context.drawImage(document.getElementById('borde'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == BLOQUENORMAL){
+            if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == OBJETIVO){
+            if(matrizLogica[x][y].getID == this.OBJETIVO){
                 context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
             }
-            if(this.matrizLogica[x][y].getID == HEROE){
+            if(this.matrizLogica[x][y].getID == this.HEROE){
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('heroeLeft'), x*47, y*47);
@@ -105,7 +106,7 @@ function actualizar(){
                         break;
                 }
             }
-            if(matrizLogica[x][y].getID == BULLET){
+            if(matrizLogica[x][y].getID == this.BULLET){
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
         }

@@ -49,7 +49,8 @@ class bala{
         this._coordinador.setObject(this._listaBalas[-1]._posX,this._listaBalas[-1]._posY,new claseEspacioLibre(this._coordinador));
         this._listaBalas.pop();
     }
-    moverBala(orientacion){
+    moverBala(orientacion){debugger;
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         var solicitud;
         if(orientacion == this._coordinador.ARRIBA){
             this._orientacion = this._coordinador.ARRIBA;
@@ -145,8 +146,9 @@ class bala{
         }
 
         /*ACTUALIZA LA MATRIZ*/
-        //this._coordinador.actualizar();
-        //this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+        //
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+        this._coordinador.actualizar();
     }
     destruirObjeto(x,y,objeto){
         this._coordinador.setObject(x,y,objeto);
@@ -159,7 +161,7 @@ class bala{
             //$interval(function () {
             this.moverBala(this._orientacion)
             //},5000);
-            //this._coordinador.actualizar();
+            this._coordinador.actualizar();
         }
 
 

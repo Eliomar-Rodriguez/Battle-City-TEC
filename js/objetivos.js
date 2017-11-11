@@ -29,7 +29,7 @@ class objetivos{
     eliminar(){
         this._vidaTotal--;//PERDIÓ 1 VIDA
         if(this._vidaTotal == 0){
-            this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+            this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.terminarJuego(false);
         }
         this._coordinador.actualizar();

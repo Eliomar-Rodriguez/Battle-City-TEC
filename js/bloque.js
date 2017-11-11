@@ -14,7 +14,7 @@ class bloque{
         return this._ID;
     }
     eliminar(){
-        this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         //this.coordinador.ejecutarSonido("bloque");
     }
     get getPosX(){
