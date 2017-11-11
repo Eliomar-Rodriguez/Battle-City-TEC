@@ -65,11 +65,46 @@ function getObject(posX,posY) {
 
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
-    this.setObject(posX,posY,new bala(posX,posY,orientacion,pertenece,this));
     debugger;
-    this.matrizLogica[posX][posY].run();//SE ACTIVA EL HILO PARA QUE LA BALA SE PUEDA MOVER SOLA
+    if(orientacion == this.ARRIBA){
+        if (this.matrizLogica[posX][posY-1]._ID == this.EMPTYSPACE){
+            this.setObject(posX,posY-1,new bala(posX,posY -1,orientacion,pertenece,this));
+            this.matrizLogica[posX][posY-1].run();
+        }
+        else if (this.matrizLogica[posX][posY-1]._ID == this.BLOQUENORMAL){
+            debugger;
+            this.setObject(posX,posY-1,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.ABAJO){
+        if (this.matrizLogica[posX][posY+1]._ID == this.EMPTYSPACE){
+            this.setObject(posX,posY+1,new bala(posX,posY +1,orientacion,pertenece,this));
+            this.matrizLogica[posX][posY+1].run();
+        }
+        else if(this.matrizLogica[posX][posY+1]._ID == this.BLOQUENORMAL){
+            this.setObject(posX,posY+1,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.IZQUIERDA){
+        if (this.matrizLogica[posX-1][posY]._ID == this.EMPTYSPACE){
+            this.setObject(posX-1,posY,new bala(posX-1,posY,orientacion,pertenece,this));
+            this.matrizLogica[posX-1][posY].run();
+        }
+        else if(this.matrizLogica[posX-1][posY]._ID == this.BLOQUENORMAL){
+            this.setObject(posX-1,posY,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.DERECHA){
+        if (this.matrizLogica[posX+1][posY]._ID == this.EMPTYSPACE){
+            this.setObject(posX+1,posY,new bala(posX+1,posY,orientacion,pertenece,this));
+            this.matrizLogica[posX+1][posY].run();
+        }
+        else if(this.matrizLogica[posX+1][posY]._ID == this.BLOQUENORMAL){
+            this.setObject(posX+1,posY,new espacioLibre(this));
+        }
+    }
     this.actualizar();
-}
+};
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     var canvas = document.getElementById('scene');
@@ -121,6 +156,7 @@ actualizar();
 document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 32://BARRA ESPACIADORA
+            debugger;
             heroe.disparar();
             break;
         case 37://IZQUIERDA
