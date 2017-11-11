@@ -65,7 +65,7 @@ class tankEnemy extends Tank{
 
     }
     generarRandom(limite){
-        return Math.floor((Math.random() * limite) + 1);
+        return Math.floor((Math.random() * limite) + 1) - 1;
     }
     moverTank(orientacion){
         var x,y,tempValue;

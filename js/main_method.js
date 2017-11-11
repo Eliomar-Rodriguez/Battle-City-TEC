@@ -70,12 +70,6 @@ function getObject(posX,posY) {
     return this.matrizLogica[posX][posY];
 }
 
-function activarHilo(posX,posY) {debugger;
-    if(!matrizLogica[posX][posY].estadoBala){
-        clearInterval(intervalID);
-    }
-    matrizLogica[posX][posY].moverBala();
-}
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
     //debugger;
@@ -121,7 +115,6 @@ function disparar(posX,posY,pertenece,orientacion) {
 }
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
-    console.log("Act Matriz");
     var canvas = document.getElementById('scene');
     var context = canvas.getContext('2d');
 
