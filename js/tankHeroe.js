@@ -81,7 +81,7 @@ class tankHeroe{
         }
         /*ACTUALIZA LA POSICIÓN DEL HEROE*/
         this._coordinador.setObject(this._posX,this._posY,this);
-        this._coordinador.actualizar();
+        //>>>>this._coordinador.actualizar();
     }
     eliminar(){
         this._vidas--;
@@ -93,13 +93,13 @@ class tankHeroe{
             this._orientacion = 1;
             this._posX = 5;
             this._posY = 6;
-            this._coordinador.setObject(this._posX,this._posY,new claseEspacioLibre(this._coordinador));
+            this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.setObject(5,6,this);
         }
         else{
             //this.coordinador.terminarJuego();
         }
-        this._coordinador.actualizar();
+        //>>>>this._coordinador.actualizar();
     }
 
     esDestructible(){

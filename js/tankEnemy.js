@@ -82,57 +82,91 @@ class tankEnemy extends Tank{
             x = this._posX+1;
         }
 
-        if (matrizLogica[x][y].getID == this._coordinador.EMPTYSPACE){
+        /*if (matrizLogica[x][y].getID == this._coordinador.EMPTYSPACE){
             debugger;
-            tempValue = matrizLogica[this._posX][this._posY];
-            matrizLogica[this._posX][this._posY] = matrizLogica[x][y];
-            matrizLogica[x][y] = tempValue;
+            tempValue = matrizLogica[x][y]; // guarda la pos siguiente
+            matrizLogica[x][y] = matrizLogica[this._posX][this._posY]; // a la pos siguiente le pongo el heroe encima para que se mueva
+            matrizLogica[this._posX][this._posY] = tempValue;
+            matrizLogica[x][y].setPosX(x);
+            matrizLogica[x][y].setPosY(y);
         }
+        var movimientoRandom = Math.floor((Math.random() * 3) + 1); // 0 arriba, 1 abajo, 2 izq, 3 der
+        if (movimientoRandom == this.getCoordinador.ARRIBA) {
+            if (matrizLogica[this._posX][this._posY - 1].getID == this.getCoordinador.EMPTYSPACE) { // espacio vacio arriba
+                matrizLogica[this._posX][this._posY - 1] = matrizLogica[this._posX][this._posY]; // pongo enemy en la pos del espacio libre
+                matrizLogica[this._posX][this._posY] = new espacioLibre(this.getCoordinador); // pongo un espacio libre donde estaba el enemy
+            }
+            else{
+                this.moverTank();
+            }
+        }
+        else if (movimientoRandom == this.getCoordinador.ABAJO) {
+            if (matrizLogica[this._posX][this._posY + 1].getID == this.getCoordinador.EMPTYSPACE) { // espacio vacio arriba
+                matrizLogica[this._posX][this._posY + 1] = matrizLogica[this._posX][this._posY];
+                matrizLogica[this._posX][this._posY] = new espacioLibre(this.getCoordinador);
+            }
+            else{
+                this.moverTank();
+            }
+        }
+        else if (movimientoRandom == this.getCoordinador.IZQUIERDA) {
+            if (matrizLogica[this._posX-1][this._posY].getID == this.getCoordinador.EMPTYSPACE) { // espacio vacio arriba
+                matrizLogica[this._posX-1][this._posY] = matrizLogica[this._posX][this._posY];
+                matrizLogica[this._posX][this._posY] = new espacioLibre(this.getCoordinador);
+            }
+            else{
+                this.moverTank();
+            }
+        }
+        else if (movimientoRandom == this.getCoordinador.DERECHA) {
+            if (matrizLogica[this._posX+1][this._posY].getID == this.getCoordinador.EMPTYSPACE) { // espacio vacio arriba
+                matrizLogica[this._posX+1][this._posY] = matrizLogica[this._posX][this._posY];
+                matrizLogica[this._posX][this._posY] = new espacioLibre(this.getCoordinador);
+            }
+            else{
+                this.moverTank();
+            }
+        }*/
 
-        this._coordinador.getObject(this._posX,this._posY).eliminar();
-        if(this._estadoVida){
+        //>>>>>this._coordinador.actualizar();//REFRESH MATRIZ GRAFICA
+        //this._coordinador.getObject(this._posX,this._posY).eliminar();
+        /*if(this._estadoVida){
             this._coordinador.setObject(this._posX,this._posY,this);//SE DESPLAZA EL TANKE SOLO SI SIGUE CON VIDA
         }
-        debugger;
-        this._coordinador.actualizar();//REFRESH MATRIZ GRAFICA
+        debugger;*/
     }
     /*PERMITE GENERAR UN HILO Y MANTENER EL TANK ENEMIGO MOVIENDOSE EN BUSCA DEL TANK HEROE
     * EL HILO SE TERMINA HASTA QUE EL ESTADO DE VIDA DEL TANK SEA FALSE
     * */
     run(){
-        try{
-            //crear hilo
-        }
-        catch (error){
-            console.log(error.message);
-        }
+
         while(this._estadoVida){
             var opciones= 0;//CONTADOR QUE DEFINE CUANTAS OPCIONES DISPONIBLES TENGO PARA ESCOGER
-            var opcDisponibles = [];//TENDRÁ LAS POSIBLES VIAS PARA DONDE SE PODRÁ DESPLAZAR EL TANK
+            var camDisponibles = [];//TENDRÁ LAS POSIBLES VIAS PARA DONDE SE PODRÁ DESPLAZAR EL TANK
             if(this._coordinador.getObject(this._posX,this._posY-1).espacioLibre()){ //ARRIBA
-                opcDisponibles.push(this._coordinador.ARRIBA);
+                camDisponibles.push(this._coordinador.ARRIBA);
                 opciones++;
             }
             if(this._coordinador.getObject(this._posX,this._posY+1).espacioLibre()){//ABAJO
-                opcDisponibles.push(this.coordinador.ABAJO);
+                camDisponibles.push(this._coordinador.ABAJO);
                 opciones++;
             }
             if(this._coordinador.getObject(this._posX-1,this._posY).espacioLibre()){//IZQUIERDA
-                opcDisponibles.push(this._coordinador.IZQUIERDA);
+                camDisponibles.push(this._coordinador.IZQUIERDA);
                 opciones++;
             }
-            if(this.coordinador.getObject(this._posX+1,this._posY).espacioLibre()){//DERECHA
-                opcDisponibles.push(this._coordinador.DERECHA);
+            if(this._coordinador.getObject(this._posX+1,this._posY).espacioLibre()){//DERECHA
+                camDisponibles.push(this._coordinador.DERECHA);
                 opciones++;
             }
             if(opciones != 0){
-                var numRandom = this.generarRandom(opciones);
-                this.moverTank(opcDisponibles[numRandom]);
+                var numRandom = this.generarRandom(opciones);debugger;
+                moverTank(camDisponibles[numRandom]);
             }
             //AQUI TIENE QUE IR LO DE BUSCAR RUTA MÁS CORTA
 
             //SE ACTUALIZA EL ESTADO DE LA MATRIZ GRAFICA
-            this._coordinador.actualizar();
+            //>>>>>this._coordinador.actualizar();
 
         }
     }

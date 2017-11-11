@@ -3,6 +3,9 @@
  */
 
 var intervalo;
+var hiloEnemy;
+var refreshPantalla;
+var enemyList = [];
 
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 3;
 this.nivelActual = 1;
@@ -114,10 +117,11 @@ function disparar(posX,posY,pertenece,orientacion) {
             this.setObject(posX+1,posY,new espacioLibre(this));
         }
     }
-    this.actualizar();
-};
+    //>>>>this.actualizar();
+}
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
+    console.log("Act Matriz");
     var canvas = document.getElementById('scene');
     var context = canvas.getContext('2d');
 
@@ -156,8 +160,8 @@ function actualizar(){
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
             if(this.matrizLogica[x][y].getID == this.ENEMY1){
-                debugger;
-                console.log(matrizLogica[x][y].getOrientacion);
+                //debugger;
+                //console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('enemy1Left'), x*47, y*47);
@@ -174,7 +178,7 @@ function actualizar(){
                 }
             }
             if(this.matrizLogica[x][y].getID == this.ENEMY2){
-                debugger;
+                //debugger;
                 console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
@@ -192,7 +196,7 @@ function actualizar(){
                 }
             }
             if(this.matrizLogica[x][y].getID == this.ENEMY3){
-                debugger;
+                //debugger;
                 console.log(matrizLogica[x][y].getOrientacion);
                 switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
@@ -213,7 +217,8 @@ function actualizar(){
     }
 }
 
-function addNewEnemy() {
+function addNewEnemy(){
+    debugger;
     var posX = this.generarPosicionAleatoria();
     var posY = this.generarPosicionAleatoria();
     var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
@@ -224,15 +229,17 @@ function addNewEnemy() {
             this.setObject(posX,posY, new tankEnemy(posX,posY,2,tankType,this, 7));
         else
             this.setObject(posX,posY, new tankEnemy(posX,posY,1,tankType,this, 8));
-        this.cantidadEnemigosVivos++;
-        actualizar();
+        cantidadEnemigosVivos++;
+        //>>>>actualizar();
+
+        hiloEnemy = setInterval(matrizLogica[posX][posY].run(),1000);
     }
     else{
         this.addNewEnemy();
     }
 }
 crearMatriz();
-actualizar();
+//>>>>actualizar();
 
 
 /*PERMITE MOVER EL HEROE*/
@@ -259,5 +266,6 @@ document.onkeydown = function (e) {
 
 window.onload= function () {
     debugger;
-    intervalo = setInterval(addNewEnemy, 1000);
+    intervalo = setInterval(addNewEnemy, 3000);
+    refreshPantalla = setInterval(actualizar,60);
 };
