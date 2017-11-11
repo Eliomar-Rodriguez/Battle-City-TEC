@@ -3,7 +3,7 @@
  */
 
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 3;
-this.nivelActual = 1;
+var nivelActual = 1;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
@@ -16,6 +16,8 @@ var matrizLogica = new Array(tamMatriz);//SE GENERA UN ARREGLO NORMAL -> [] <-
 
 var heroe;//INSTANCIA DEL HEROE GLOBAL
 var tankesEnemigos = [];//ALMACENA LOS TANKES ENEMIGOS CREADOS
+
+var intervalo;
 
 /*--------------------------MÉTODOS IMPORTANTES----------------------------------------------*/
 /*PERMITE GENERAR LA MATRIZ LÓGICA CON LA QUE SE TRABAJARÁ*/
@@ -65,17 +67,59 @@ function getObject(posX,posY) {
 
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
-    this.setObject(posX,posY,new bala(posX,posY,orientacion,pertenece,this));
-    debugger;
-    this.matrizLogica[posX][posY].run();//SE ACTIVA EL HILO PARA QUE LA BALA SE PUEDA MOVER SOLA
+    if(orientacion == this.ARRIBA){
+        if (this.matrizLogica[posX][posY-1]._ID == this.EMPTYSPACE){
+            this.setObject(posX,posY-1,new bala(posX,posY -1,orientacion,pertenece,this));
+            matrizLogica[posX][posY-1].run();
+        }
+        else if (this.matrizLogica[posX][posY-1]._ID == this.BLOQUENORMAL){
+            setObject(posX,posY-1,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.ABAJO){
+        if (this.matrizLogica[posX][posY+1]._ID == this.EMPTYSPACE){
+            this.setObject(posX,posY+1,new bala(posX,posY +1,orientacion,pertenece,this));
+            this.matrizLogica[posX][posY+1].run();
+        }
+        else if(this.matrizLogica[posX][posY+1]._ID == this.BLOQUENORMAL){
+            this.setObject(posX,posY+1,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.IZQUIERDA){
+        if (this.matrizLogica[posX-1][posY]._ID == this.EMPTYSPACE){
+            this.setObject(posX-1,posY,new bala(posX-1,posY,orientacion,pertenece,this));
+            this.matrizLogica[posX-1][posY].run();
+        }
+        else if(this.matrizLogica[posX-1][posY]._ID == this.BLOQUENORMAL){
+            this.setObject(posX-1,posY,new espacioLibre(this));
+        }
+    }
+    else if(orientacion == this.DERECHA){
+        if (this.matrizLogica[posX+1][posY]._ID == this.EMPTYSPACE){
+            this.setObject(posX+1,posY,new bala(posX+1,posY,orientacion,pertenece,this));
+            this.matrizLogica[posX+1][posY].run();
+        }
+        else if(this.matrizLogica[posX+1][posY]._ID == this.BLOQUENORMAL){
+            this.setObject(posX+1,posY,new espacioLibre(this));
+        }
+    }
     this.actualizar();
+};
+
+function sleep(milliseconds) {
+    let start = new Date().getTime();
+    for (let i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
 }
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     var canvas = document.getElementById('scene');
     var context = canvas.getContext('2d');
 
-    for(x = 0;x<tamMatriz;x++){
+    for(var x = 0;x<tamMatriz;x++){
 
         for(var y=0;y<tamMatriz;y++){
             if(matrizLogica[x][y].getID == this.EMPTYSPACE){
@@ -107,6 +151,7 @@ function actualizar(){
                 }
             }
             if(matrizLogica[x][y].getID == this.BULLET){
+                debugger;
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
         }
@@ -138,6 +183,4 @@ document.onkeydown = function (e) {
     }
 };
 
-setInterval(function(){
-    getObject(5,3);
-}, 3000);
+
