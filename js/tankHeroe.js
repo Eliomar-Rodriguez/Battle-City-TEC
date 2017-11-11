@@ -81,8 +81,7 @@ class tankHeroe{
         }
         /*ACTUALIZA LA POSICIÓN DEL HEROE*/
         this._coordinador.setObject(this._posX,this._posY,this);
-        console.log(this._coordinador.matrizLogica);
-        //this._coordinador.actualizar();
+        this._coordinador.actualizar();
     }
     eliminar(){
         this._vidas--;

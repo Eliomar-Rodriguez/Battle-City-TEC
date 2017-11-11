@@ -83,6 +83,7 @@ class tankEnemy{
         if(this._estadoVida){
             this._coordinador.setObject(this._posX,this._posY,this);//SE DESPLAZA EL TANKE SOLO SI SIGUE CON VIDA
         }
+        debugger;
         this._coordinador.actualizar();//REFRESH MATRIZ GRAFICA
     }
     /*PERMITE GENERAR UN HILO Y MANTENER EL TANK ENEMIGO MOVIENDOSE EN BUSCA DEL TANK HEROE

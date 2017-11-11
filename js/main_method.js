@@ -40,14 +40,13 @@ function crearMatriz() {
         posY = generarPosicionAleatoria();//SE GENERAN POSICIONES AL AZAR ENTRE 0 Y 10(TAMAÑO MATRIZ)
         if(posX != 0 && posX != tamMatriz-1 && posY != 0 && posY != tamMatriz-1
             && matrizLogica[posX][posY].espacioLibre()){
-            matrizLogica[posX][posY] = new bloque(posX,posY,BLOQUENORMAL); //SE AGREGA EL OBJETO BLOQUE
+            matrizLogica[posX][posY] = new bloque(posX,posY,this); //SE AGREGA EL OBJETO BLOQUE
             cantidadMaxBloques--;
         }
     }
     /*SE CREA EL HEROE Y SE COLOCA EN LA MATRIZ*/
     heroe = new tankHeroe(7,13,this);
     matrizLogica[7][13] = heroe;
-    console.log(matrizLogica);
     return matrizLogica;
 }
 /*OBTIENE UNA POSICIÓN ENTRE 1 Y 14*/
@@ -68,8 +67,8 @@ function getObject(posX,posY) {
 function disparar(posX,posY,pertenece,orientacion) {
     this.setObject(posX,posY,new bala(posX,posY,orientacion,pertenece,this));
     this.matrizLogica[posX][posY].run();//SE ACTIVA EL HILO PARA QUE LA BALA SE PUEDA MOVER SOLA
-    //this.actualizar();
-};
+    this.actualizar();
+}
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     var canvas = document.getElementById('scene');
@@ -77,7 +76,7 @@ function actualizar(){
 
     for(x = 0;x<tamMatriz;x++){
 
-        for(var y=0;y<this.tamMatriz;y++){
+        for(var y=0;y<tamMatriz;y++){debugger;
             if(matrizLogica[x][y].getID == EMPTYSPACE){
                 context.drawImage(document.getElementById('empty'), x*47, y*47);
             }
@@ -91,7 +90,7 @@ function actualizar(){
                 context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
             }
             if(this.matrizLogica[x][y].getID == HEROE){
-                switch (this.matrizLogica[x][y].getOrientacion){
+                switch (matrizLogica[x][y].getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('heroeLeft'), x*47, y*47);
                         break;
@@ -114,6 +113,7 @@ function actualizar(){
 }
 
 crearMatriz();
+actualizar();
 
 
 /*PERMITE MOVER EL HEROE*/
