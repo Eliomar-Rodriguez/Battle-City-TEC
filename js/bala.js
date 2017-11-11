@@ -2,6 +2,7 @@
  * Created by Josue on 10/11/2017.
  */
 class bala{
+
     constructor(x,y,orientacion,balaTanke,parteLogica){
         this._coordinador = parteLogica;
         this._ID = this._coordinador.BULLET;
@@ -55,9 +56,11 @@ class bala{
         if(orientacion == this._coordinador.ARRIBA){
             this._orientacion = this._coordinador.ARRIBA;
             solicitud = this._coordinador.getObject(this._posX,this._posY-1); // objeto siguiente hacia arriba
+            //this.addBullet([this._posX,this._posY-1]);
             if(solicitud.espacioLibre()){
                 this._posY--;//SIGA MOVIENDOSE
                 this._coordinador.setObject(this._posX,this._posY+1,solicitud);
+
                 this._coordinador.setObject(this._posX,this._posY,this);
                 return;
             }
@@ -159,25 +162,24 @@ class bala{
                 this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             }
         }
+        //this._coordinador.actualizar();
     }
     destruirObjeto(x,y,objeto){
         this._coordinador.setObject(x,y,objeto);
         //this.coordinador.destruirTankEnemigo(x,y);
         //this.coordinador.ejecutarSonido("destruir");
     }
-
+    activarHilo(){debugger;
+        this.hilo= setInterval(this.moverBala(this._estadoBala),1000);
+    }
     run(){
+        //Concurrent.Thread.create(this.moverBala,this._orientacion);
         while(this._estadoBala){
-            //$interval(function () {
-            setInterval(function () {
-                this.moverBala(this._orientacion);
-            },4000);
-            //this.moverBala(this._orientacion)
-            //},5000);
-            this._coordinador.actualizar();
+            setTimeout(this.moverBala(this._orientacion),2000);
+
+
         }
-
-
+        this._coordinador.actualizar();
 
     }
 

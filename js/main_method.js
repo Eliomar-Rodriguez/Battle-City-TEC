@@ -17,6 +17,8 @@ var matrizLogica = new Array(tamMatriz);//SE GENERA UN ARREGLO NORMAL -> [] <-
 var heroe;//INSTANCIA DEL HEROE GLOBAL
 var tankesEnemigos = [];//ALMACENA LOS TANKES ENEMIGOS CREADOS
 
+var intervalo;
+
 /*--------------------------MÉTODOS IMPORTANTES----------------------------------------------*/
 /*PERMITE GENERAR LA MATRIZ LÓGICA CON LA QUE SE TRABAJARÁ*/
 function crearMatriz() {
@@ -63,17 +65,24 @@ function getObject(posX,posY) {
     return this.matrizLogica[posX][posY];
 }
 
+function activarHilo(posX,posY) {debugger;
+    if(!matrizLogica[posX][posY].estadoBala){
+        clearInterval(intervalID);
+    }
+    matrizLogica[posX][posY].moverBala();
+}
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
-    debugger;
+    //debugger;
     if(orientacion == this.ARRIBA){
         if (this.matrizLogica[posX][posY-1]._ID == this.EMPTYSPACE){
             this.setObject(posX,posY-1,new bala(posX,posY -1,orientacion,pertenece,this));
-            this.matrizLogica[posX][posY-1].run();
+            //Concurrent.Thread.create();
+            matrizLogica[posX][posY-1].run();
         }
         else if (this.matrizLogica[posX][posY-1]._ID == this.BLOQUENORMAL){
             debugger;
-            this.setObject(posX,posY-1,new espacioLibre(this));
+            setObject(posX,posY-1,new espacioLibre(this));
         }
     }
     else if(orientacion == this.ABAJO){
