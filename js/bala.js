@@ -42,13 +42,6 @@ class bala{
     set setEstadoBala(estado){
         this._estadoBala = estado;
     }
-    addBullet(bala){
-        this._listaBalas.push(bala);
-    }
-    removeLastBullet(){
-        this._coordinador.setObject(this._listaBalas[-1]._posX,this._listaBalas[-1]._posY,new espacioLibre(this._coordinador));
-        this._listaBalas.pop();
-    }
     moverBala(orientacion){
         this._coordinador.actualizar();
         var solicitud;
@@ -57,7 +50,7 @@ class bala{
             solicitud = this._coordinador.getObject(this._posX,this._posY-1); // objeto siguiente hacia arriba
             if(solicitud.espacioLibre()){
                 this._posY--;//SIGA MOVIENDOSE
-                this._coordinador.setObject(this._posX,this._posY+1,solicitud);
+                //this._coordinador.setObject(this._posX,this._posY+1,solicitud);
                 this._coordinador.setObject(this._posX,this._posY,this);
             }
             if(solicitud.esDestructible()){
@@ -83,7 +76,7 @@ class bala{
             solicitud = this._coordinador.getObject(this._posX,this._posY+1);
             if(solicitud.espacioLibre()){
                 this._posY++;
-                this._coordinador.setObject(this._posX,this._posY-1,solicitud);
+                //this._coordinador.setObject(this._posX,this._posY-1,solicitud);
                 this._coordinador.setObject(this._posX,this._posY,this);
                 return;
             }
@@ -110,7 +103,7 @@ class bala{
             solicitud = this._coordinador.getObject(this._posX-1,this._posY);
             if(solicitud.espacioLibre()){
                 this._posX--;
-                this._coordinador.setObject(this._posX+1,this._posY,solicitud);
+                //this._coordinador.setObject(this._posX+1,this._posY,solicitud);
                 this._coordinador.setObject(this._posX,this._posY,this);
                 return;
             }
@@ -137,8 +130,8 @@ class bala{
             solicitud = this._coordinador.getObject(this._posX+1,this._posY);
             if(solicitud.espacioLibre()){
                 this._posX++;
-                this._coordinador.setObject(this._posX,this._posY,this);debugger;
-                this._coordinador.setObject(this._posX-1,this._posY,solicitud);
+                this._coordinador.setObject(this._posX,this._posY,this);
+                //this._coordinador.setObject(this._posX-1,this._posY,solicitud);
             }
             if(solicitud.esDestructible()){
                 if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
@@ -168,11 +161,10 @@ class bala{
 
     run(){
         while(this._estadoBala){
+            //this._coordinador.sleep(300);
             this.moverBala(this._orientacion);
-            this._coordinador.sleep(200);
-            this._coordinador.actualizar();
         }
-
+        this._coordinador.quitarBalasMatriz(this.getID);
     }
 
     esDestructible(){

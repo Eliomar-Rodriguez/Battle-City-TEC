@@ -46,7 +46,7 @@ class tankHeroe{
             this._coordinador.disparar(this._posX,this._posY,this._coordinador.BALAHEROE,this._orientacion);
             this._disparo = true;//SE DISPARÓ
         }
-        //window.setTimeout(3000);
+        //this._coordinador.sleep(100);
         this._disparo = false;
     }
 

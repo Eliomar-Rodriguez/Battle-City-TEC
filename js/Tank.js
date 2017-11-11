@@ -43,4 +43,7 @@ class Tank{
     set setOrientacion(value) {
         this._orientacion = value;
     }
+    generarRandom(limite){
+        return Math.floor((Math.random() * limite) + 1) - 1;
+    }
 }

@@ -4,11 +4,11 @@
  */
 
 class objetivos{
-    constructor(x,y,totalVida,parteLogica){
+    constructor(x,y,totalVida,parteLogica,id){
         this._posX = x;
         this._posY = y;
         this._coordinador = parteLogica;
-        this._ID = this._coordinador.OBJETIVO;
+        this._ID = id;
         this._vidaTotal = totalVida;
     }
     get getID(){
@@ -26,13 +26,13 @@ class objetivos{
     set setPosY(y){
         this._posY = y;
     }
-    eliminar(){
+    eliminar(){debugger;
         this._vidaTotal--;//PERDIÓ 1 VIDA
         if(this._vidaTotal == 0){
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-            this._coordinador.terminarJuego(false);
+            this._coordinador.restarObjetivos();
+            this._coordinador.verificarEstadoJuego();
         }
-        this._coordinador.actualizar();
     }
 
     espacioLibre(){

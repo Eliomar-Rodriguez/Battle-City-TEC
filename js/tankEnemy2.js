@@ -63,9 +63,6 @@ class tankEnemy2 extends Tank{
         }
 
     }
-    generarRandom(limite){
-        return Math.floor((Math.random() * limite) + 1);
-    }
     moverTank(orientacion){
         var x,y,tempValue;
         if(orientacion == this._coordinador.ARRIBA){
@@ -108,7 +105,7 @@ class tankEnemy2 extends Tank{
         while(this._estadoVida){
             var opciones= 0;//CONTADOR QUE DEFINE CUANTAS OPCIONES DISPONIBLES TENGO PARA ESCOGER
             var opcDisponibles = [];//TENDRÁ LAS POSIBLES VIAS PARA DONDE SE PODRÁ DESPLAZAR EL TANK
-            if(this._coordinador.getObject(this._posX,this._posY-1).espacioLibre()){ //ARRIBA
+            if(this.getCoordinador.getObject(this._posX,this._posY-1).espacioLibre()){ //ARRIBA
                 opcDisponibles.push(this._coordinador.ARRIBA);
                 opciones++;
             }

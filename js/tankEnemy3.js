@@ -63,9 +63,6 @@ class tankEnemy3 extends Tank{
         }
 
     }
-    generarRandom(limite){
-        return Math.floor((Math.random() * limite) + 1);
-    }
     moverTank(orientacion){
         var x,y,tempValue;
         if(orientacion == this._coordinador.ARRIBA){

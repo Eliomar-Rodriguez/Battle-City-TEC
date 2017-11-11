@@ -6,13 +6,14 @@ var intervalo;
 var hiloEnemy;
 var refreshPantalla;
 var enemyList = [];
+var tiempo = 0; var countDown;
 
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 3;
 var nivelActual = 1;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
-this.BORDE = 0; this.BLOQUENORMAL = 1; this.EMPTYSPACE = 2; this.OBJETIVO = 3;
+this.BORDE = 0; this.BLOQUENORMAL = 1; this.EMPTYSPACE = 2; this.OBJETIVO1 = 3; this.OBJETIVO2 = 9;
 this.HEROE = 4; this.ENEMY1 = 5; this.BULLET = 6;//PARA DIBUJAR - ID'S PARA CADA CLASE
 this.ENEMY2 = 7; this.ENEMY3 = 8;
 var BALAHEROE = 0;  var BALAENEMIGO = 1;//BALAS PARA CADA TIPO DE TANKE
@@ -27,6 +28,7 @@ var intervalo;
 /*--------------------------MÉTODOS IMPORTANTES----------------------------------------------*/
 /*PERMITE GENERAR LA MATRIZ LÓGICA CON LA QUE SE TRABAJARÁ*/
 function crearMatriz() {
+    var posX; var posY;
     /*AGREGA LOS OBJETO ESPACIOS LIBRES Y BLOQUE BARRERA*/
     for(var x = 0; x < tamMatriz; x++){
         matrizLogica[x] = new Array(tamMatriz);//SE HACE ASÍ PARA PODER CREAR UNA MATRIZ DIMENSIONAL -> [][] <-
@@ -42,11 +44,9 @@ function crearMatriz() {
 
     /*PERMITE CREAR LOS BLOQUES DESTRUCTIBLES*/
     while(cantidadMaxBloques > 0){
-        var posX; var posY;
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();//SE GENERAN POSICIONES AL AZAR ENTRE 0 Y 10(TAMAÑO MATRIZ)
-        if(posX != 0 && posX != tamMatriz-1 && posY != 0 && posY != tamMatriz-1
-            && matrizLogica[posX][posY].espacioLibre()){
+        if(matrizLogica[posX][posY].espacioLibre()){
             matrizLogica[posX][posY] = new bloque(posX,posY,this); //SE AGREGA EL OBJETO BLOQUE
             cantidadMaxBloques--;
         }
@@ -54,12 +54,69 @@ function crearMatriz() {
     /*SE CREA EL HEROE Y SE COLOCA EN LA MATRIZ*/
     heroe = new tankHeroe(7,13,this);
     matrizLogica[7][13] = heroe;
+
+    /*CREAR OBJETIVOS*/
+    while(totalObjetivos>0){
+        posX = generarPosicionAleatoria();
+        posY = generarPosicionAleatoria();
+        var objetivo1Usado = false; var objetivo2Usado = false;
+        if(matrizLogica[posX][posY].espacioLibre()){
+            if(!objetivo1Usado){
+                setObject(posX,posY,new objetivos(posX,posY,4,this,OBJETIVO1));
+                totalObjetivos--;
+            }
+            else if(!objetivo2Usado){
+                setObject(posX,posY,new objetivos(posX,posY,2,this,OBJETIVO2));
+                totalObjetivos--;
+            }
+
+        }
+    }
+    totalObjetivos=2;
     return matrizLogica;
 }
 /*OBTIENE UNA POSICIÓN ENTRE 1 Y 14*/
 function generarPosicionAleatoria(){
     return Math.floor((Math.random() * 14) + 1);
 }
+
+/*RESTA UNO DEL TOTAL DE OBJETIVOS VIVOS*/
+function restarObjetivos() {
+    totalObjetivos--;
+    document.getElementById("txtObjetivos").textContent = totalObjetivos;
+}
+
+/*PERMITE REINICIAR EL JUEGO CUANDO SE PASE DE NIVEL*/
+function reiniciarJuego() {
+    cantidadMaxBloques = 50;
+    totalObjetivos = 2;
+    matrizLogica = new Array(tamMatriz);
+    crearMatriz();
+    clearInterval(countDown);
+    timer();
+}
+
+/*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
+function verificarEstadoJuego() {debugger;
+    if(this.totalObjetivos==0){
+        if(nivelActual == 1){
+            nivelActual = 2;
+            alert("avanzas al nivel 2");
+            document.getElementById("txtNivel").textContent = nivelActual;
+            reiniciarJuego();
+        }
+        else if(nivelActual == 2){
+            nivelActual = 3;
+            alert("avanzas al nivel 3");
+            document.getElementById("txtNivel").textContent = nivelActual;
+            reiniciarJuego();
+        }
+        else if(nivelActual == 3){
+            alert("HAS GANADO");
+        }
+    }
+}
+
 
 /*PERMITE ESTAR CAMBIANDO CONSTANTEMENTE POSICIONES DENTRO DE LA MATRIZ Y ASIGNANDO NUEVOS OBJETOS*/
 function setObject(posX,posY,objetoNuevo){
@@ -80,6 +137,7 @@ function disparar(posX,posY,pertenece,orientacion) {
         else if (this.matrizLogica[posX][posY - 1]._ID == this.BLOQUENORMAL) {
             setObject(posX, posY - 1, new espacioLibre(this));
         }
+        
     }
     else if (orientacion == this.ABAJO) {
         if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
@@ -108,7 +166,6 @@ function disparar(posX,posY,pertenece,orientacion) {
             this.setObject(posX + 1, posY, new espacioLibre(this));
         }
     }
-    //>>>>this.actualizar();
 }
 
 function sleep(milliseconds) {
@@ -136,7 +193,7 @@ function actualizar(){
             if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
-            if(matrizLogica[x][y].getID == this.OBJETIVO){
+            if(matrizLogica[x][y].getID == this.OBJETIVO1 || matrizLogica[x][y].getID == this.OBJETIVO2){
                 context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
             }
             if(this.matrizLogica[x][y].getID == this.HEROE){
@@ -156,7 +213,6 @@ function actualizar(){
                 }
             }
             if(matrizLogica[x][y].getID == this.BULLET){
-                debugger;
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
             if(this.matrizLogica[x][y].getID == this.ENEMY1){
@@ -224,9 +280,9 @@ function addNewEnemy(){
     var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
     if(posX != 0 && posX != this.tamMatriz-1 && posY != 0 && posY != this.tamMatriz-1 && matrizLogica[posX][posY].getID == this.EMPTYSPACE){//BARRERA
         if(tankType == 1)
-            this.setObject(posX,posY, new tankEnemy1(posX,posY,tankType,this,ENEMY1));// listo
+            this.setObject(posX,posY, new tankEnemy1(posX,posY,1,this,ENEMY1));// listo
         else if(tankType == 2)
-            this.setObject(posX,posY, new tankEnemy2(posX,posY,2,tankType,this, ENEMY2));
+            this.setObject(posX,posY, new tankEnemy2(posX,posY,2,this, ENEMY2));
         else
             this.setObject(posX,posY, new tankEnemy3(posX,posY,this, ENEMY3,2));
         this.cantidadEnemigosVivos++;
@@ -240,6 +296,34 @@ function addNewEnemy(){
 crearMatriz();
 //>>>>actualizar();
 
+/*PERMITE EJECUTAR EL TEMPORIZADOR, EMPIEZA EN 2:00 MINUTOS*/
+function startTimer(duracion, objeto) {
+    var timer = duracion, minutos, segundos;
+    countDown =setInterval(function () {
+        minutos = parseInt(timer / 60, 10)
+        segundos = parseInt(timer % 60, 10);
+
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        objeto.textContent = minutos + ":" + segundos;
+
+        if (--timer < 0) {
+            timer = duracion;
+        }
+    }, 1000);
+}
+
+function quitarBalasMatriz(tanke) {
+    for(var x = 0;x<tamMatriz;x++){
+        for(var y=0;y<tamMatriz;y++){
+            if(matrizLogica[x][y].getID == tanke){
+                setObject(x,y,new espacioLibre(this));
+                sleep(50);
+            }
+        }
+    }
+}
 
 /*PERMITE MOVER EL HEROE*/
 document.onkeydown = function (e) {
@@ -262,8 +346,13 @@ document.onkeydown = function (e) {
     }
 };
 
+/*CREA EL TEMPORIZADOR*/
+function timer() {debugger;
+    tiempo = 60 * 2;//SE INICIALIZA EL TIMER
+    startTimer(tiempo, document.getElementById("txtTiempo"));//SE LLAMA LA FUNCIÓN PARA CREAR EL TIMER
+}
 window.onload= function () {
-    debugger;
-    intervalo = setInterval(addNewEnemy, 3000);
+    timer();
+    //intervalo = setInterval(addNewEnemy, 3000);
     refreshPantalla = setInterval(actualizar,60);
 };
