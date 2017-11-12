@@ -26,9 +26,10 @@ class objetivos{
         this._posY = y;
     }
     eliminar(){
+        muerteObjeto.play();
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         this._coordinador.restarObjetivos();
-        this._coordinador.verificarEstadoJuego()
+        this._coordinador.verificarEstadoJuego();
     }
 
     espacioLibre(){

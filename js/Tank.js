@@ -1,3 +1,4 @@
+
 class Tank{
     constructor(ID,parteLogica,x,y,o) {
         this._ID = ID;

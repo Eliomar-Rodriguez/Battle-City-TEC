@@ -1,6 +1,3 @@
-/**
- * Created by Josue on 10/11/2017.
- */
 
 class bloque{
     constructor(x,y,parteLogica){
@@ -15,7 +12,7 @@ class bloque{
     }
     eliminar(){
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-        //this.coordinador.ejecutarSonido("bloque");
+        destruir.play();
     }
     get getPosX(){
         return this._posX;

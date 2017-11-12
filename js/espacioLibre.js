@@ -1,7 +1,3 @@
-/**
- * Created by Josue on 01/11/2017.
- */
-
 
 /***
  * Hace referencia los espacios restantes que no sean: bloques, tankes, objetivos
