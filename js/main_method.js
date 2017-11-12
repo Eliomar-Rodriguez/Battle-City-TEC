@@ -197,8 +197,8 @@ function terminarJuego(estado) {
     this.finJuego = true;
     clearInterval(hiloEnemy1);
     clearInterval(hiloEnemy2y3);
-    clearInterval(countDown);
     clearInterval(intervalo);
+    clearInterval(countDown);
 
 }
 
