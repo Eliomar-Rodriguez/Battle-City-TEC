@@ -57,17 +57,19 @@ function crearMatriz() {
     matrizLogica[7][13] = heroe;
 
     /*CREAR OBJETIVOS*/
+    var objetivo1Usado = false; var objetivo2Usado = false;
     while(totalObjetivos>0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();
-        var objetivo1Usado = false; var objetivo2Usado = false;
         if(matrizLogica[posX][posY].espacioLibre()){
             if(!objetivo1Usado){
                 setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO1));
+                objetivo1Usado=true;
                 totalObjetivos--;
             }
             else if(!objetivo2Usado){
                 setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO2));
+                objetivo2Usado=true;
                 totalObjetivos--;
             }
         }
@@ -94,13 +96,15 @@ function crearMatriz() {
                 setObject(posX,posY,new tankEnemy3(posX,posY,this,ENEMY3,2));
                 EnemyList2y3.push(getObject(posX,posY));
                 usoEnemy3=true;
-            }debugger;
+            }
             totalEnemigos--;
         }
     }
     totalEnemigos=3;
+    document.getElementById("txtTanksEnemy").textContent = totalEnemigos;
     return matrizLogica;
 }
+
 /*OBTIENE UNA POSICIÓN ENTRE 1 Y 14*/
 function generarPosicionAleatoria(){
     return Math.floor((Math.random() * 14) + 1);
@@ -114,10 +118,12 @@ function restarObjetivos() {
 
 /*PERMITE REINICIAR EL JUEGO CUANDO SE PASE DE NIVEL*/
 function reiniciarJuego() {
+    EnemyList1=[];EnemyList2y3=[];
     cantidadMaxBloques = 50;
     totalObjetivos = 2;
     matrizLogica = new Array(tamMatriz);
     crearMatriz();
+    totalEnemigos=3;
     clearInterval(countDown);
     timer();
 }
@@ -142,7 +148,7 @@ function terminarJuego(estado) {
     clearInterval(hiloEnemy2y3);
     clearInterval(countDown);
     clearInterval(intervalo);
-    console.clear();
+
 }
 
 /*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
@@ -174,11 +180,11 @@ function verificarEstadoJuego() {debugger;
     }
 }
 
-
 /*PERMITE ESTAR CAMBIANDO CONSTANTEMENTE POSICIONES DENTRO DE LA MATRIZ Y ASIGNANDO NUEVOS OBJETOS*/
 function setObject(posX,posY,objetoNuevo){
     matrizLogica[posX][posY] = objetoNuevo;
 }
+
 /*EXTRAE EL OBJETO QUE ESTÁ EN UNA POSICIÓN [X,Y]*/
 function getObject(posX,posY) {
     return this.matrizLogica[posX][posY];
@@ -275,7 +281,10 @@ function borrarEnemigo(tanke,estado) {
             }
         }
     }
+    totalEnemigos--;
+    document.getElementById("txtTanksEnemy").textContent = totalEnemigos;
 }
+
 
 function sleep(milliseconds) {
     let start = new Date().getTime();
@@ -285,9 +294,14 @@ function sleep(milliseconds) {
         }
     }
 }
+
+/*OBTIENE EL OBJETO DE TIPO HEROE*/
+function getHeroe() {
+    return heroe;
+}
+
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
-    //console.log("Dentro");
     var canvas = document.getElementById('scene');
     var context = canvas.getContext('2d');
 
@@ -304,10 +318,10 @@ function actualizar(){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
             else if(matrizLogica[x][y].getID == this.OBJETIVO1 ){
-                context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
+                context.drawImage(document.getElementById('Objetivo1'), x*47, y*47);
             }
             else if(matrizLogica[x][y].getID == this.OBJETIVO2){
-                context.drawImage(document.getElementById('objetivo2'), x*47, y*47);
+                context.drawImage(document.getElementById('Objetivo2'), x*47, y*47);
             }
             else if(this.matrizLogica[x][y].getID == this.HEROE){
                 switch (matrizLogica[x][y].getOrientacion){
@@ -386,8 +400,8 @@ function actualizar(){
     }
 }
 
+/*CREA UN NUEVO ENEMIGO*/
 function addNewEnemy(){
-    debugger;
     var posX = this.generarPosicionAleatoria();
     var posY = this.generarPosicionAleatoria();
     var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
@@ -406,12 +420,13 @@ function addNewEnemy(){
             EnemyList2y3.push(getObject(posX,posY));
         }
         totalEnemigos++;
+        document.getElementById("txtTanksEnemy").textContent = totalEnemigos;
     }
     else{
         this.addNewEnemy();
     }
 }
-crearMatriz();
+
 
 /*PERMITE EJECUTAR EL TEMPORIZADOR, EMPIEZA EN 2:00 MINUTOS*/
 function startTimer(duracion, objeto) {
@@ -470,24 +485,103 @@ document.onkeydown = function (e) {
 };
 
 /*CREA EL TEMPORIZADOR*/
-function timer() {debugger;
+function timer() {
     tiempo = 60 * 2;//SE INICIALIZA EL TIMER
     startTimer(tiempo, document.getElementById("txtTiempo"));//SE LLAMA LA FUNCIÓN PARA CREAR EL TIMER
 }
+
+function dispararEnemigo(posX,posY,pertenece,orientacion) {debugger;
+    if (orientacion == this.ARRIBA) {
+        if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
+            this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
+            matrizLogica[posX][posY - 1].run();
+        }
+        else if (this.matrizLogica[posX][posY - 1]._ID == HEROE) {
+            getObject(posX,posY-1).eliminar();
+        }
+    }
+    else if (orientacion == this.ABAJO) {
+        if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
+            this.setObject(posX, posY + 1, new bala(posX, posY + 1, orientacion, pertenece, this));
+            this.matrizLogica[posX][posY + 1].run();
+        }
+        else if (this.matrizLogica[posX][posY + 1]._ID == HEROE) {
+            getObject(posX,posY+1).eliminar();
+        }
+    }
+    else if (orientacion == this.IZQUIERDA) {
+        if (this.matrizLogica[posX - 1][posY]._ID == this.EMPTYSPACE) {
+            this.setObject(posX - 1, posY, new bala(posX - 1, posY, orientacion, pertenece, this));
+            this.matrizLogica[posX - 1][posY].run();
+        }
+        else if (this.matrizLogica[posX-1][posY]._ID == HEROE) {
+            getObject(posX-1,posY).eliminar();
+        }
+    }
+    else if (orientacion == this.DERECHA) {
+        if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
+            this.setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
+            this.matrizLogica[posX + 1][posY].run();
+        }
+        else if (this.matrizLogica[posX+1][posY]._ID == HEROE) {
+            getObject(posX+1,posY).eliminar();
+        }
+    }
+}
+
+function buscaEnMatriz(enemigo) {console.log("ANTES: "+enemigo.getOrientacion);
+    if(enemigo.getPosX < heroe.getPosX){
+        if(enemigo.getPosY == heroe.getPosY){//DEBE APUNTAR ARRIBA
+            enemigo.setOrientacion = ARRIBA;
+            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+        }
+    }
+    else{
+        if(enemigo.getPosY == heroe.getPosY){//DEBE APUNTAR ABAJO
+            enemigo.setOrientacion = ABAJO;
+            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+        }
+    }
+    if(enemigo.getPosY < heroe.getPosY){
+        if(enemigo.getPosX == heroe.getPosX){
+            enemigo.setOrientacion = IZQUIERDA;
+            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+        }
+    }
+    else{
+        if(enemigo.getPosX == heroe.getPosX){
+            enemigo.setOrientacion = DERECHA;
+            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+        }
+    }
+    console.log("DESPUES: "+enemigo.getOrientacion);
+}
+
+/*BUSCA SI LA FILA X O LA COLUMNA Y ES IGUAL A LA DEL HEROE DESPUÉS DEL MOVIMIENTO REALIZADO*/
+function compararPosHeroe(enemigo){
+    if(buscaEnMatriz(enemigo)){
+        console.log("SE ENCUENTRA EN POSICION PARA DISPARAR!");
+    }
+}
+
+/*INICIAR JUEGO*/
+crearMatriz();
 window.onload= function () {
     timer();
     hiloEnemy1 = setInterval(function () {
         for(var i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
+            compararPosHeroe(EnemyList1[i]);
         }
     },300);
 
     hiloEnemy2y3 = setInterval(function () {
         for(var i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
+            compararPosHeroe(EnemyList2y3[i]);
         }
     },900);
 
-    //intervalo = setInterval(addNewEnemy, 5000);
+    intervalo = setInterval(addNewEnemy, 15000);
     refreshPantalla = setInterval(actualizar,60);
 };
