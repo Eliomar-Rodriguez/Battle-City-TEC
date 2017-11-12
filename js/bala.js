@@ -1,6 +1,4 @@
-/**
- * Created by Josue on 10/11/2017.
- */
+
 class bala{
 
     constructor(x,y,orientacion,balaTanke,parteLogica){
@@ -63,12 +61,14 @@ class bala{
                     if(solicitud.getID == this._coordinador.HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
+                        muerteHeroe.play();
                     }
                 }
             }
             if(solicitud.getID == this._coordinador.BORDE){
                 this._estadoBala = false;
                 this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                balaPared.play();
             }
         }
         else if(orientacion == this._coordinador.ABAJO){
@@ -90,12 +90,14 @@ class bala{
                     if(solicitud.getID == this._coordinador.HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
+                        muerteHeroe.play();
                     }
                 }
             }
             if(solicitud.getID == this._coordinador.BORDE){
                 this._estadoBala = false;
                 this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                balaPared.play();
             }
         }
         else if(orientacion == this._coordinador.IZQUIERDA){
@@ -117,12 +119,14 @@ class bala{
                     if(solicitud.getID == this._coordinador.HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
+                        muerteHeroe.play();
                     }
                 }
             }
             if(solicitud.getID == this._coordinador.BORDE){
                 this._estadoBala = false;
                 this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                balaPared.play();
             }
         }
         else if(orientacion == this._coordinador.DERECHA){
@@ -143,15 +147,16 @@ class bala{
                     if(solicitud.getID == this._coordinador.HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
+                        muerteHeroe.play();
                     }
                 }
             }
             if(solicitud.getID == this._coordinador.BORDE){
                 this._estadoBala = false;
                 this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                balaPared.play();
             }
         }
-        //this._coordinador.actualizar();
     }
     destruirObjeto(x,y,objeto){
         this._coordinador.setObject(x,y,objeto);

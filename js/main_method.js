@@ -1,12 +1,58 @@
-/**
- * Created by Josue on 10/11/2017.
- */
+/*
+* Metodo principal de donde inicia el juego
+*
+* Juego desarrollado como proyecto, para dicho proyecto era necesaria la creacion
+* Desarrolladores:
+*   - Josue Arce
+*   - Eliomar Rodriguez
+* Estudiantes del ITCR Sede San Carlos
+* Curso: Lenguajes de Programacion
+* Año: 2017
+* */
 
 var intervalo;
 var hiloEnemy1, hiloEnemy2y3;
 var EnemyList2y3 = [], EnemyList1 = [];
 var refreshPantalla;
 var finJuego = false;
+
+/*
+* audios que se usan a lo largo del juego
+* */
+
+var destruir = new Audio(reprMusica(1));
+destruir.loop = false;
+
+var disparo = new Audio(reprMusica(2));
+disparo.loop = false;
+
+var game_over = new Audio(reprMusica(3));
+game_over.loop = false;
+
+var juegoNormal = new Audio(reprMusica(4));
+juegoNormal.loop = true;
+
+var muerteEnemy = new Audio(reprMusica(5));
+muerteEnemy.loop = false;
+
+var muerteHeroe = new Audio(reprMusica(6));
+muerteHeroe.loop = false;
+
+var muerteObjeto = new Audio(reprMusica(7));
+muerteObjeto.loop = false;
+
+var pasoNivel = new Audio(reprMusica(8));
+pasoNivel.loop = false;
+
+var inicio = new Audio(reprMusica(9));
+inicio.loop = false;
+
+var disparoAHeroe = new Audio(reprMusica(10));
+disparoAHeroe.loop = false;
+
+var balaPared = new Audio(reprMusica(11));
+balaPared.loop = false;
+
 
 var tiempo = 0; var countDown;
 
@@ -63,11 +109,11 @@ function crearMatriz() {
         var objetivo1Usado = false; var objetivo2Usado = false;
         if(matrizLogica[posX][posY].espacioLibre()){
             if(!objetivo1Usado){
-                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO1));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO1));
                 totalObjetivos--;
             }
             else if(!objetivo2Usado){
-                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO2));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO2));
                 totalObjetivos--;
             }
         }
@@ -101,6 +147,7 @@ function crearMatriz() {
     totalEnemigos=3;
     return matrizLogica;
 }
+
 /*OBTIENE UNA POSICIÓN ENTRE 1 Y 14*/
 function generarPosicionAleatoria(){
     return Math.floor((Math.random() * 14) + 1);
@@ -128,21 +175,67 @@ function terminarJuego(estado) {
             'Good job!',
             'Has Ganado!',
             'success'
-        )
+        );
+        pasoNivel.play();
     }
     else{
         swal(
             'Good job!',
             'Has Perdido!',
             'success'
-        )
+        );
+        game_over.play();
     }
+    juegoNormal.pause();
     this.finJuego = true;
     clearInterval(hiloEnemy1);
     clearInterval(hiloEnemy2y3);
     clearInterval(countDown);
     clearInterval(intervalo);
     console.clear();
+}
+
+/*
+* funcion encargada de la reproduccion de canciones o audios del juego
+* */
+function reprMusica(opcion) {
+    var audio;
+    switch (opcion){
+        case 1:
+            audio = "sounds/destruirBloque.ogg";
+            break;
+        case 2:
+            audio = "sounds/disparo.wav";
+            break;
+        case 3:
+            audio = "sounds/game_over.ogg";
+            break;
+        case 4:
+            audio = "sounds/juegoNormal.wav";
+            break;
+        case 5:
+            audio = "sounds/muerteEnemy.wav";
+            break;
+        case 6:
+            audio = "sounds/muerteHeroe.wav";
+            break;
+        case 7:
+            audio = "sounds/muerteObjetivo.wav";
+            break;
+        case 8:
+            audio = "sounds/pasoNivel.wav";
+            break;
+        case 9:
+            audio = "sounds/stage_start.ogg";
+            break;
+        case 10:
+            audio = "sounds/disparoAHeroe.wav";
+            break;
+        case 11:
+            audio = "sounds/choquePared.wav";
+            break;
+    }
+    return audio;
 }
 
 /*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
@@ -174,11 +267,11 @@ function verificarEstadoJuego() {debugger;
     }
 }
 
-
 /*PERMITE ESTAR CAMBIANDO CONSTANTEMENTE POSICIONES DENTRO DE LA MATRIZ Y ASIGNANDO NUEVOS OBJETOS*/
 function setObject(posX,posY,objetoNuevo){
     matrizLogica[posX][posY] = objetoNuevo;
 }
+
 /*EXTRAE EL OBJETO QUE ESTÁ EN UNA POSICIÓN [X,Y]*/
 function getObject(posX,posY) {
     return this.matrizLogica[posX][posY];
@@ -187,21 +280,28 @@ function getObject(posX,posY) {
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
     if (orientacion == this.ARRIBA) {
+        debugger;
         if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
             this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
+
             matrizLogica[posX][posY - 1].run();
         }
         else if (this.matrizLogica[posX][posY - 1]._ID == this.BLOQUENORMAL) {
             setObject(posX, posY - 1, new espacioLibre(this));
+            destruir.play();
         }
         else if(
-            matrizLogica[posX][posY-1]._ID == this.ENEMY1 ||
-            matrizLogica[posX][posY-1]._ID == this.ENEMY2 ||
-            matrizLogica[posX][posY-1]._ID == this.ENEMY3 ||
-            matrizLogica[posX][posY-1]._ID == this.OBJETIVO1 ||
-            matrizLogica[posX][posY-1]._ID == this.OBJETIVO2
-        ){
-            matrizLogica[posX][posY-1].eliminar();
+            matrizLogica[posX][posY-1]._ID == ENEMY1 ||
+            matrizLogica[posX][posY-1]._ID == ENEMY2 ||
+            matrizLogica[posX][posY-1]._ID == ENEMY3 ||
+            matrizLogica[posX][posY-1]._ID == OBJETIVO1 ||
+            matrizLogica[posX][posY-1]._ID == OBJETIVO2
+        )
+        {
+            matrizLogica[posX][posY - 1].eliminar();
+        }
+        else{
+            balaPared.play();
         }
     }
     else if (orientacion == this.ABAJO) {
@@ -211,6 +311,7 @@ function disparar(posX,posY,pertenece,orientacion) {
         }
         else if (this.matrizLogica[posX][posY + 1]._ID == this.BLOQUENORMAL) {
             this.setObject(posX, posY + 1, new espacioLibre(this));
+            destruir.play();
         }
         else if(
             matrizLogica[posX][posY+1]._ID == this.ENEMY1 ||
@@ -221,6 +322,9 @@ function disparar(posX,posY,pertenece,orientacion) {
         ){
             matrizLogica[posX][posY+1].eliminar();
         }
+        else{
+            balaPared.play();
+        }
     }
     else if (orientacion == this.IZQUIERDA) {
         if (this.matrizLogica[posX - 1][posY]._ID == this.EMPTYSPACE) {
@@ -229,6 +333,7 @@ function disparar(posX,posY,pertenece,orientacion) {
         }
         else if (this.matrizLogica[posX - 1][posY]._ID == this.BLOQUENORMAL) {
             this.setObject(posX - 1, posY, new espacioLibre(this));
+            destruir.play();
         }
         else if(
             matrizLogica[posX-1][posY]._ID == this.ENEMY1 ||
@@ -239,6 +344,9 @@ function disparar(posX,posY,pertenece,orientacion) {
         ){
             matrizLogica[posX-1][posY].eliminar();
         }
+        else{
+            balaPared.play();
+        }
     }
     else if (orientacion == this.DERECHA) {
         if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
@@ -247,6 +355,7 @@ function disparar(posX,posY,pertenece,orientacion) {
         }
         else if (this.matrizLogica[posX + 1][posY]._ID == this.BLOQUENORMAL) {
             this.setObject(posX + 1, posY, new espacioLibre(this));
+            destruir.play();
         }
         else if(
             matrizLogica[posX+1][posY]._ID == this.ENEMY1 ||
@@ -256,6 +365,9 @@ function disparar(posX,posY,pertenece,orientacion) {
             matrizLogica[posX+1][posY]._ID == this.OBJETIVO2
         ){
             matrizLogica[posX+1][posY].eliminar();
+        }
+        else{
+            balaPared.play();
         }
     }
 }
@@ -285,6 +397,7 @@ function sleep(milliseconds) {
         }
     }
 }
+
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
     //console.log("Dentro");
@@ -411,7 +524,10 @@ function addNewEnemy(){
         this.addNewEnemy();
     }
 }
+
 crearMatriz();
+
+inicio.play();
 
 /*PERMITE EJECUTAR EL TEMPORIZADOR, EMPIEZA EN 2:00 MINUTOS*/
 function startTimer(duracion, objeto) {
@@ -428,9 +544,6 @@ function startTimer(duracion, objeto) {
         if (--timer < 0) {
             timer = duracion;
         }
-        /*if(timer == 0){
-            alert("termino!");
-        }*/
     }, 1000);
 
 }
@@ -474,8 +587,10 @@ function timer() {debugger;
     tiempo = 60 * 2;//SE INICIALIZA EL TIMER
     startTimer(tiempo, document.getElementById("txtTiempo"));//SE LLAMA LA FUNCIÓN PARA CREAR EL TIMER
 }
+
 window.onload= function () {
-    timer();
+    //juegoNormal.play();
+
     hiloEnemy1 = setInterval(function () {
         for(var i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
@@ -490,4 +605,5 @@ window.onload= function () {
 
     //intervalo = setInterval(addNewEnemy, 5000);
     refreshPantalla = setInterval(actualizar,60);
+
 };

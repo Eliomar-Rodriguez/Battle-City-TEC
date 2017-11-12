@@ -58,5 +58,6 @@ class tankEnemy3 extends Tank{
     eliminar(){
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         this._coordinador.borrarEnemigo(this,1);
+        muerteEnemy.play();
     }
 }

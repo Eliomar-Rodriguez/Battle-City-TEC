@@ -1,6 +1,3 @@
-/**
- * Created by Josue on 31/10/2017.
- */
 
 class tankHeroe{
     constructor(x,y,parteLogica){
@@ -45,6 +42,7 @@ class tankHeroe{
             //this.coordinador.ejecutarSonido("SHOOT");
             this._coordinador.disparar(this._posX,this._posY,this._coordinador.BALAHEROE,this._orientacion);
             this._disparo = true;//SE DISPARÓ
+            disparo.play();
         }
         this._disparo = false;
     }
@@ -93,6 +91,7 @@ class tankHeroe{
             this._coordinador.setObject(this._posX,this._posY,this);
         }
         else{
+            muerteHeroe.play();
             this.coordinador.terminarJuego(false);
         }
     }

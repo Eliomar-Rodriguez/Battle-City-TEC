@@ -60,7 +60,7 @@ class tankEnemy2 extends Tank{
         if(this._resistencia == 0){
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.borrarEnemigo(this,1);
+            muerteEnemy.play();
         }
-
     }
 }
