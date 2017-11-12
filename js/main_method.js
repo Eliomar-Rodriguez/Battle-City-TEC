@@ -6,6 +6,7 @@ var intervalo;
 var hiloEnemy1, hiloEnemy2y3;
 var EnemyList2y3 = [], EnemyList1 = [];
 var refreshPantalla;
+var finJuego = false;
 
 var tiempo = 0; var countDown;
 
@@ -24,7 +25,6 @@ var matrizLogica = new Array(tamMatriz);//SE GENERA UN ARREGLO NORMAL -> [] <-
 var heroe;//INSTANCIA DEL HEROE GLOBAL
 var tankesEnemigos = [];//ALMACENA LOS TANKES ENEMIGOS CREADOS
 
-var intervalo;
 
 /*--------------------------MÉTODOS IMPORTANTES----------------------------------------------*/
 /*PERMITE GENERAR LA MATRIZ LÓGICA CON LA QUE SE TRABAJARÁ*/
@@ -63,14 +63,13 @@ function crearMatriz() {
         var objetivo1Usado = false; var objetivo2Usado = false;
         if(matrizLogica[posX][posY].espacioLibre()){
             if(!objetivo1Usado){
-                setObject(posX,posY,new objetivos(posX,posY,4,this,OBJETIVO1));
+                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO1));
                 totalObjetivos--;
             }
             else if(!objetivo2Usado){
-                setObject(posX,posY,new objetivos(posX,posY,2,this,OBJETIVO2));
+                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO2));
                 totalObjetivos--;
             }
-
         }
     }
     totalObjetivos=2;
@@ -123,23 +122,54 @@ function reiniciarJuego() {
     timer();
 }
 
+function terminarJuego(estado) {
+    if(estado){
+        swal(
+            'Good job!',
+            'Has Ganado!',
+            'success'
+        )
+    }
+    else{
+        swal(
+            'Good job!',
+            'Has Perdido!',
+            'success'
+        )
+    }
+    this.finJuego = true;
+    clearInterval(hiloEnemy1);
+    clearInterval(hiloEnemy2y3);
+    clearInterval(countDown);
+    clearInterval(intervalo);
+    console.clear();
+}
+
 /*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
 function verificarEstadoJuego() {debugger;
     if(this.totalObjetivos==0){
         if(nivelActual == 1){
             nivelActual = 2;
-            alert("avanzas al nivel 2");
+            swal(
+                'Good job!',
+                'Avanzas al Nivel 2!',
+                'success'
+            );
             document.getElementById("txtNivel").textContent = nivelActual;
             reiniciarJuego();
         }
         else if(nivelActual == 2){
             nivelActual = 3;
-            alert("avanzas al nivel 3");
+            swal(
+                'Good job!',
+                'Avanzas al Nivel 3!',
+                'success'
+            );
             document.getElementById("txtNivel").textContent = nivelActual;
             reiniciarJuego();
         }
         else if(nivelActual == 3){
-            alert("HAS GANADO");
+            terminarJuego(true);
         }
     }
 }
@@ -164,7 +194,15 @@ function disparar(posX,posY,pertenece,orientacion) {
         else if (this.matrizLogica[posX][posY - 1]._ID == this.BLOQUENORMAL) {
             setObject(posX, posY - 1, new espacioLibre(this));
         }
-        
+        else if(
+            matrizLogica[posX][posY-1]._ID == this.ENEMY1 ||
+            matrizLogica[posX][posY-1]._ID == this.ENEMY2 ||
+            matrizLogica[posX][posY-1]._ID == this.ENEMY3 ||
+            matrizLogica[posX][posY-1]._ID == this.OBJETIVO1 ||
+            matrizLogica[posX][posY-1]._ID == this.OBJETIVO2
+        ){
+            matrizLogica[posX][posY-1].eliminar();
+        }
     }
     else if (orientacion == this.ABAJO) {
         if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
@@ -173,6 +211,15 @@ function disparar(posX,posY,pertenece,orientacion) {
         }
         else if (this.matrizLogica[posX][posY + 1]._ID == this.BLOQUENORMAL) {
             this.setObject(posX, posY + 1, new espacioLibre(this));
+        }
+        else if(
+            matrizLogica[posX][posY+1]._ID == this.ENEMY1 ||
+            matrizLogica[posX][posY+1]._ID == this.ENEMY2 ||
+            matrizLogica[posX][posY+1]._ID == this.ENEMY3 ||
+            matrizLogica[posX][posY+1]._ID == this.OBJETIVO1 ||
+            matrizLogica[posX][posY+1]._ID == this.OBJETIVO2
+        ){
+            matrizLogica[posX][posY+1].eliminar();
         }
     }
     else if (orientacion == this.IZQUIERDA) {
@@ -183,6 +230,15 @@ function disparar(posX,posY,pertenece,orientacion) {
         else if (this.matrizLogica[posX - 1][posY]._ID == this.BLOQUENORMAL) {
             this.setObject(posX - 1, posY, new espacioLibre(this));
         }
+        else if(
+            matrizLogica[posX-1][posY]._ID == this.ENEMY1 ||
+            matrizLogica[posX-1][posY]._ID == this.ENEMY2 ||
+            matrizLogica[posX-1][posY]._ID == this.ENEMY3 ||
+            matrizLogica[posX-1][posY]._ID == this.OBJETIVO1 ||
+            matrizLogica[posX-1][posY]._ID == this.OBJETIVO2
+        ){
+            matrizLogica[posX-1][posY].eliminar();
+        }
     }
     else if (orientacion == this.DERECHA) {
         if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
@@ -191,6 +247,32 @@ function disparar(posX,posY,pertenece,orientacion) {
         }
         else if (this.matrizLogica[posX + 1][posY]._ID == this.BLOQUENORMAL) {
             this.setObject(posX + 1, posY, new espacioLibre(this));
+        }
+        else if(
+            matrizLogica[posX+1][posY]._ID == this.ENEMY1 ||
+            matrizLogica[posX+1][posY]._ID == this.ENEMY2 ||
+            matrizLogica[posX+1][posY]._ID == this.ENEMY3 ||
+            matrizLogica[posX+1][posY]._ID == this.OBJETIVO1 ||
+            matrizLogica[posX+1][posY]._ID == this.OBJETIVO2
+        ){
+            matrizLogica[posX+1][posY].eliminar();
+        }
+    }
+}
+
+function borrarEnemigo(tanke,estado) {
+    if(estado == 1){
+        for(item in EnemyList2y3){
+            if(tanke == EnemyList2y3[item]){
+                EnemyList2y3.splice(item,1);
+            }
+        }
+    }
+    else{
+        for(item in EnemyList1){
+            if(tanke == EnemyList1[item]){
+                EnemyList1.splice(item,1);
+            }
         }
     }
 }
@@ -221,8 +303,11 @@ function actualizar(){
             else if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
-            else if(matrizLogica[x][y].getID == this.OBJETIVO1 || matrizLogica[x][y].getID == this.OBJETIVO2){
+            else if(matrizLogica[x][y].getID == this.OBJETIVO1 ){
                 context.drawImage(document.getElementById('objetivo1'), x*47, y*47);
+            }
+            else if(matrizLogica[x][y].getID == this.OBJETIVO2){
+                context.drawImage(document.getElementById('objetivo2'), x*47, y*47);
             }
             else if(this.matrizLogica[x][y].getID == this.HEROE){
                 switch (matrizLogica[x][y].getOrientacion){
@@ -313,7 +398,7 @@ function addNewEnemy(){
             EnemyList1.push(getObject(posX,posY));
         }
         else if(tankType == 2){
-            this.setObject(posX,posY, new tankEnemy2(posX,posY,2,this, ENEMY2));
+            this.setObject(posX,posY, new tankEnemy2(posX,posY,3,this, ENEMY2));
             EnemyList2y3.push(getObject(posX,posY));
         }
         else{
@@ -343,7 +428,11 @@ function startTimer(duracion, objeto) {
         if (--timer < 0) {
             timer = duracion;
         }
+        /*if(timer == 0){
+            alert("termino!");
+        }*/
     }, 1000);
+
 }
 
 function quitarBalasMatriz(tanke) {
@@ -359,22 +448,24 @@ function quitarBalasMatriz(tanke) {
 
 /*PERMITE MOVER EL HEROE*/
 document.onkeydown = function (e) {
-    switch (e.keyCode) {
-        case 32://BARRA ESPACIADORA
-            heroe.disparar();
-            break;
-        case 37://IZQUIERDA
-            heroe.moverHeroe(2);
-            break;
-        case 38://ARRIBA
-            heroe.moverHeroe(0);
-            break;
-        case 39://DERECHA
-            heroe.moverHeroe(3);
-            break;
-        case 40://ABAJO
-            heroe.moverHeroe(1);
-            break;
+    if(!finJuego){
+        switch (e.keyCode) {
+            case 32://BARRA ESPACIADORA
+                heroe.disparar();
+                break;
+            case 37://IZQUIERDA
+                heroe.moverHeroe(2);
+                break;
+            case 38://ARRIBA
+                heroe.moverHeroe(0);
+                break;
+            case 39://DERECHA
+                heroe.moverHeroe(3);
+                break;
+            case 40://ABAJO
+                heroe.moverHeroe(1);
+                break;
+        }
     }
 };
 
@@ -397,6 +488,6 @@ window.onload= function () {
         }
     },900);
 
-    intervalo = setInterval(addNewEnemy, 5000);
+    //intervalo = setInterval(addNewEnemy, 5000);
     refreshPantalla = setInterval(actualizar,60);
 };

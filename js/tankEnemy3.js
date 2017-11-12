@@ -1,5 +1,6 @@
 /**
  * Created by Josue on 31/10/2017.
+ * SE MUEVE LENTO PERO PROVOCA MAS DANIO
  */
 class tankEnemy3 extends Tank{
     constructor(x,y,parteLogica,id,danio){
@@ -55,12 +56,7 @@ class tankEnemy3 extends Tank{
         return true;
     }
     eliminar(){
-        this._vidaTotal--;
-        if(this._vidaTotal == 0){
-            this._estadoVida = false;
-            //this._coordinador.borrarEnemigo(this._posX,this._posY);
-            //this.coordinador.ejecutarSonido("destruir");
-        }
-
+        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+        this._coordinador.borrarEnemigo(this,1);
     }
 }

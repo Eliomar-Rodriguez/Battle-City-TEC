@@ -1,5 +1,6 @@
 /**
  * Created by Josue on 31/10/2017.
+ * SOPORTA 3 BALAZOS DEL TANKE HEROE PERO SE MUEVE LENTO
  */
 class tankEnemy2 extends Tank{
     constructor(x,y,vidaTotal,parteLogica,id){
@@ -55,11 +56,10 @@ class tankEnemy2 extends Tank{
         return true;
     }
     eliminar(){
-        this._vidaTotal--;
-        if(this._vidaTotal == 0){
-            this._estadoVida = false;
-            this._coordinador.borrarEnemigo(this._posX,this._posY);
-            //this.coordinador.ejecutarSonido("destruir");
+        this._resistencia--;
+        if(this._resistencia == 0){
+            this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+            this._coordinador.borrarEnemigo(this,1);
         }
 
     }

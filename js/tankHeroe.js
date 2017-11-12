@@ -46,7 +46,6 @@ class tankHeroe{
             this._coordinador.disparar(this._posX,this._posY,this._coordinador.BALAHEROE,this._orientacion);
             this._disparo = true;//SE DISPARÓ
         }
-        //this._coordinador.sleep(100);
         this._disparo = false;
     }
 
@@ -88,18 +87,14 @@ class tankHeroe{
         //this.coordinador.ejecutarSonido("bajaVidaHeroe");
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         if(this._vidas > 1){
-            this._vidas--;
-            this._posX = 5;this._posY = 6;
+            this._posX = 7;this._posY = 13;
             this._orientacion = 1;
-            this._posX = 5;
-            this._posY = 6;
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-            this._coordinador.setObject(5,6,this);
+            this._coordinador.setObject(this._posX,this._posY,this);
         }
         else{
-            //this.coordinador.terminarJuego();
+            this.coordinador.terminarJuego(false);
         }
-        //>>>>this._coordinador.actualizar();
     }
 
     esDestructible(){

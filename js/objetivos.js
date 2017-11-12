@@ -26,7 +26,7 @@ class objetivos{
     set setPosY(y){
         this._posY = y;
     }
-    eliminar(){debugger;
+    eliminar(){
         this._vidaTotal--;//PERDIÓ 1 VIDA
         if(this._vidaTotal == 0){
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
