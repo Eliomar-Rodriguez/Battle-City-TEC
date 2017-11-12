@@ -95,6 +95,9 @@ class Tank{
         }
         this._coordinador.setObject(this._posX,this._posY,this);
     }
+    dispararEnemy(){
+        console.log("El tanque que disparó fue: "+this.getID)
+    }
     generarRandom(limite){
         return Math.floor((Math.random() * limite) + 1) - 1;
     }

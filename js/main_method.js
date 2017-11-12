@@ -11,8 +11,8 @@
 * */
 
 var intervalo;
-var hiloEnemy1, hiloEnemy2y3;
-var EnemyList2y3 = [], EnemyList1 = [];
+var hiloEnemy1, hiloEnemy2y3, hiloBalasEnemy1;
+var EnemyList2y3 = [], EnemyList1 = [], bulletList = [];
 var refreshPantalla;
 var finJuego = false;
 
@@ -682,18 +682,24 @@ window.onload= function () {
     hiloEnemy1 = setInterval(function () {
         for(var i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
-            //compararPosHeroe(EnemyList1[i]);
+            EnemyList1[i].dispararEnemy();
         }
-    },300);
+    },300); // los enemigos se mueven y disparan cada 0.3 segundos
 
     hiloEnemy2y3 = setInterval(function () {
         for(var i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
-            //compararPosHeroe(EnemyList2y3[i]);
+            EnemyList2y3[i].dispararEnemy();
         }
-    },900);
+    },900); // los enemigos se mueven y disparan cada 0.9 segundos
 
-    intervalo = setInterval(addNewEnemy, 15000);
-    refreshPantalla = setInterval(actualizar,60);
+    hiloBalasEnemy1 = setInterval(function () {
+        for(var i = 0; i < bulletList.length;i++){
+            bulletList[i].dispararEnemy();
+        }
+    },700); // los enemigos se mueven y disparan cada 0.7 segundos
+
+    intervalo = setInterval(addNewEnemy, 15000); // actualiza enemigos cada 15 segundos
+    refreshPantalla = setInterval(actualizar,60); // actualiza la ventana de juego cada 0.06 segundos
 
 };
