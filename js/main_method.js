@@ -100,14 +100,14 @@ function crearMatriz() {
     }
     /*SE CREA EL HEROE Y SE COLOCA EN LA MATRIZ*/
     heroe = new tankHeroe(7,13,this);
-    matrizLogica[7][13] = heroe;
+    setObject(7,13,heroe);
 
     /*CREAR OBJETIVOS*/
     var objetivo1Usado = false; var objetivo2Usado = false;
     while(totalObjetivos>0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();
-        if(matrizLogica[posX][posY].espacioLibre()){
+        if(getObject(posX,posY).espacioLibre()){
             if(!objetivo1Usado){
                 setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO1));
                 objetivo1Usado=true;
@@ -121,6 +121,7 @@ function crearMatriz() {
         }
     }
     totalObjetivos=2;
+    document.getElementById("txtObjetivos").textContent = totalObjetivos;
 
     /*CREAR ENEMIGOS LA PRIMERA VEZ*/
     var usoEnemy1 = false; var usoEnemy2 = false; var usoEnemy3 = false;
@@ -164,14 +165,15 @@ function restarObjetivos() {
 
 /*PERMITE REINICIAR EL JUEGO CUANDO SE PASE DE NIVEL*/
 function reiniciarJuego() {
+    timer();
     EnemyList1=[];EnemyList2y3=[];
     cantidadMaxBloques = 50;
     totalObjetivos = 2;
     matrizLogica = new Array(tamMatriz);
-    crearMatriz();
     totalEnemigos=3;
+    crearMatriz();
     clearInterval(countDown);
-    timer();
+
 }
 
 function terminarJuego(estado) {
@@ -666,9 +668,7 @@ function buscaEnMatriz(enemigo) {console.log("ANTES: "+enemigo.getOrientacion);
 
 /*BUSCA SI LA FILA X O LA COLUMNA Y ES IGUAL A LA DEL HEROE DESPUÉS DEL MOVIMIENTO REALIZADO*/
 function compararPosHeroe(enemigo){
-    if(buscaEnMatriz(enemigo)){
-        console.log("SE ENCUENTRA EN POSICION PARA DISPARAR!");
-    }
+    buscaEnMatriz(enemigo);
 }
 
 /*INICIAR JUEGO*/

@@ -158,11 +158,6 @@ class bala{
             }
         }
     }
-    destruirObjeto(x,y,objeto){
-        this._coordinador.setObject(x,y,objeto);
-        //this.coordinador.destruirTankEnemigo(x,y);
-        //this.coordinador.ejecutarSonido("destruir");
-    }
 
     run(){
         while(this._estadoBala){
