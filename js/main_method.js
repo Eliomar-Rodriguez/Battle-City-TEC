@@ -677,7 +677,6 @@ inicio.play();
 
 window.onload= function () {
     timer();
-
     juegoNormal.play();
 
     hiloEnemy1 = setInterval(function () {
