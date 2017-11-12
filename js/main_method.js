@@ -54,21 +54,21 @@ function crearMatriz() {
     }
     /*SE CREA EL HEROE Y SE COLOCA EN LA MATRIZ*/
     heroe = new tankHeroe(7,13,this);
-    matrizLogica[7][13] = heroe;
+    setObject(7,13,heroe);
 
     /*CREAR OBJETIVOS*/
     var objetivo1Usado = false; var objetivo2Usado = false;
     while(totalObjetivos>0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();
-        if(matrizLogica[posX][posY].espacioLibre()){
+        if(getObject(posX,posY).espacioLibre()){
             if(!objetivo1Usado){
-                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO1));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO1));
                 objetivo1Usado=true;
                 totalObjetivos--;
             }
             else if(!objetivo2Usado){
-                setObject(posX,posY,new objetivos(posX,posY,1,this,OBJETIVO2));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO2));
                 objetivo2Usado=true;
                 totalObjetivos--;
             }
@@ -559,9 +559,7 @@ function buscaEnMatriz(enemigo) {console.log("ANTES: "+enemigo.getOrientacion);
 
 /*BUSCA SI LA FILA X O LA COLUMNA Y ES IGUAL A LA DEL HEROE DESPUÉS DEL MOVIMIENTO REALIZADO*/
 function compararPosHeroe(enemigo){
-    if(buscaEnMatriz(enemigo)){
-        console.log("SE ENCUENTRA EN POSICION PARA DISPARAR!");
-    }
+    buscaEnMatriz(enemigo);
 }
 
 /*INICIAR JUEGO*/
@@ -571,14 +569,14 @@ window.onload= function () {
     hiloEnemy1 = setInterval(function () {
         for(var i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
-            compararPosHeroe(EnemyList1[i]);
+            //compararPosHeroe(EnemyList1[i]);
         }
     },300);
 
     hiloEnemy2y3 = setInterval(function () {
         for(var i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
-            compararPosHeroe(EnemyList2y3[i]);
+            //compararPosHeroe(EnemyList2y3[i]);
         }
     },900);
 
