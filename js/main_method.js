@@ -71,21 +71,18 @@ var matrizLogica = new Array(tamMatriz);//SE GENERA UN ARREGLO NORMAL -> [] <-
 var heroe;//INSTANCIA DEL HEROE GLOBAL
 var tankesEnemigos = [];//ALMACENA LOS TANKES ENEMIGOS CREADOS
 
-
 /*--------------------------MÉTODOS IMPORTANTES----------------------------------------------*/
 /*PERMITE GENERAR LA MATRIZ LÓGICA CON LA QUE SE TRABAJARÁ*/
 function crearMatriz() {
-    var posX; var posY;
+    let posX; let posY;
     /*AGREGA LOS OBJETO ESPACIOS LIBRES Y BLOQUE BARRERA*/
-    for(var x = 0; x < tamMatriz; x++){
+    for(let x = 0; x < tamMatriz; x++){
         matrizLogica[x] = new Array(tamMatriz);//SE HACE ASÍ PARA PODER CREAR UNA MATRIZ DIMENSIONAL -> [][] <-
-        for(var y = 0; y < tamMatriz; y++){
-            if(x == tamMatriz -1 || y == tamMatriz - 1 || x == 0 || y == 0){
+        for(let y = 0; y < tamMatriz; y++){
+            if(x === tamMatriz -1 || y === tamMatriz - 1 || x === 0 || y === 0)
                 matrizLogica[x][y] = new bloqueBarrera(this); //SE CREA UN ELEMENTO BARRERA
-            }
-            else{
+            else
                 matrizLogica[x][y] = new espacioLibre(this);//LOS DEMÁS ELEMENTOS SERÁN ESPACIOS VACÍOS
-            }
         }
     }
 
@@ -199,7 +196,6 @@ function terminarJuego(estado) {
     clearInterval(hiloEnemy2y3);
     clearInterval(intervalo);
     clearInterval(countDown);
-
 }
 
 function bajarVidasHeroe(vidas) {
@@ -216,7 +212,7 @@ function bajarVidasHeroe(vidas) {
 * funcion encargada de la reproduccion de canciones o audios del juego
 * */
 function reprMusica(opcion) {
-    var audio;
+    let audio;
     switch (opcion){
         case 1:
             audio = "sounds/destruirBloque.ogg";
@@ -257,8 +253,8 @@ function reprMusica(opcion) {
 
 /*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
 function verificarEstadoJuego() {debugger;
-    if(this.totalObjetivos==0){
-        if(nivelActual == 1){
+    if(this.totalObjetivos===0){
+        if(nivelActual === 1){
             nivelActual = 2;
             swal(
                 'Good job!',
@@ -268,7 +264,7 @@ function verificarEstadoJuego() {debugger;
             document.getElementById("txtNivel").textContent = nivelActual;
             reiniciarJuego();
         }
-        else if(nivelActual == 2){
+        else if(nivelActual === 2){
             nivelActual = 3;
             swal(
                 'Good job!',
@@ -278,7 +274,7 @@ function verificarEstadoJuego() {debugger;
             document.getElementById("txtNivel").textContent = nivelActual;
             reiniciarJuego();
         }
-        else if(nivelActual == 3){
+        else if(nivelActual === 3){
             terminarJuego(true);
         }
     }
@@ -296,89 +292,89 @@ function getObject(posX,posY) {
 
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
-    if (orientacion == this.ARRIBA) {
-        if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
+    if (orientacion === ARRIBA) {
+        if (getObject(posX,posY-1)._ID === EMPTYSPACE) {
             this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
 
-            matrizLogica[posX][posY - 1].run();
+            getObject(posX,posY-1).run();
         }
-        else if (this.matrizLogica[posX][posY - 1]._ID == this.BLOQUENORMAL) {
+        else if (getObject(posX,posY-1)._ID === BLOQUENORMAL) {
             setObject(posX, posY - 1, new espacioLibre(this));
             destruir.play();
         }
         else if(
-            matrizLogica[posX][posY-1]._ID == ENEMY1 ||
-            matrizLogica[posX][posY-1]._ID == ENEMY2 ||
-            matrizLogica[posX][posY-1]._ID == ENEMY3 ||
-            matrizLogica[posX][posY-1]._ID == OBJETIVO1 ||
-            matrizLogica[posX][posY-1]._ID == OBJETIVO2
+            getObject(posX,posY-1)._ID === ENEMY1 ||
+            getObject(posX,posY-1)._ID === ENEMY2 ||
+            getObject(posX,posY-1)._ID === ENEMY3 ||
+            getObject(posX,posY-1)._ID === OBJETIVO1 ||
+            getObject(posX,posY-1)._ID === OBJETIVO2
         )
         {
-            matrizLogica[posX][posY - 1].eliminar();
+            getObject(posX,posY-1).eliminar();
         }
         else{
             balaPared.play();
         }
     }
-    else if (orientacion == this.ABAJO) {
-        if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
-            this.setObject(posX, posY + 1, new bala(posX, posY + 1, orientacion, pertenece, this));
-            this.matrizLogica[posX][posY + 1].run();
+    else if (orientacion === ABAJO) {
+        if (getObject(posX,posY+1)._ID === EMPTYSPACE) {
+            setObject(posX, posY + 1, new bala(posX, posY + 1, orientacion, pertenece, this));
+            getObject(posX,posY+1).run();
         }
-        else if (this.matrizLogica[posX][posY + 1]._ID == this.BLOQUENORMAL) {
-            this.setObject(posX, posY + 1, new espacioLibre(this));
+        else if (getObject(posX,posY+1)._ID === BLOQUENORMAL) {
+            setObject(posX, posY + 1, new espacioLibre(this));
             destruir.play();
         }
         else if(
-            matrizLogica[posX][posY+1]._ID == this.ENEMY1 ||
-            matrizLogica[posX][posY+1]._ID == this.ENEMY2 ||
-            matrizLogica[posX][posY+1]._ID == this.ENEMY3 ||
-            matrizLogica[posX][posY+1]._ID == this.OBJETIVO1 ||
-            matrizLogica[posX][posY+1]._ID == this.OBJETIVO2
+            getObject(posX,posY+1)._ID === ENEMY1 ||
+            getObject(posX,posY+1)._ID === ENEMY2 ||
+            getObject(posX,posY+1)._ID === ENEMY3 ||
+            getObject(posX,posY+1)._ID === OBJETIVO1 ||
+            getObject(posX,posY+1)._ID === OBJETIVO2
         ){
-            matrizLogica[posX][posY+1].eliminar();
+            getObject(posX,posY+1).eliminar();
         }
         else{
             balaPared.play();
         }
     }
-    else if (orientacion == this.IZQUIERDA) {
-        if (this.matrizLogica[posX - 1][posY]._ID == this.EMPTYSPACE) {
-            this.setObject(posX - 1, posY, new bala(posX - 1, posY, orientacion, pertenece, this));
-            this.matrizLogica[posX - 1][posY].run();
+    else if (orientacion === IZQUIERDA) {
+        if (getObject(posX-1,posY)._ID === EMPTYSPACE) {
+            setObject(posX - 1, posY, new bala(posX - 1, posY, orientacion, pertenece, this));
+            getObject(posX-1,posY).run();
         }
-        else if (this.matrizLogica[posX - 1][posY]._ID == this.BLOQUENORMAL) {
-            this.setObject(posX - 1, posY, new espacioLibre(this));
+        else if (getObject(posX-1,posY)._ID === BLOQUENORMAL) {
+            setObject(posX - 1, posY, new espacioLibre(this));
             destruir.play();
         }
         else if(
-            matrizLogica[posX-1][posY]._ID == this.ENEMY1 ||
-            matrizLogica[posX-1][posY]._ID == this.ENEMY2 ||
-            matrizLogica[posX-1][posY]._ID == this.ENEMY3 ||
-            matrizLogica[posX-1][posY]._ID == this.OBJETIVO1 ||
-            matrizLogica[posX-1][posY]._ID == this.OBJETIVO2
+            getObject(posX-1,posY)._ID === ENEMY1 ||
+            getObject(posX-1,posY)._ID === ENEMY2 ||
+            getObject(posX-1,posY)._ID === ENEMY3 ||
+            getObject(posX-1,posY)._ID === OBJETIVO1 ||
+            getObject(posX-1,posY)._ID === OBJETIVO2
         ){
-            matrizLogica[posX-1][posY].eliminar();
+            getObject(posX-1,posY).eliminar();
         }
         else{
             balaPared.play();
         }
     }
-    else if (orientacion == this.DERECHA) {
-        if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
+    else if (orientacion === DERECHA) {
+        if (getObject(posX+1,posY)._ID === EMPTYSPACE) {
             this.setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
-            this.matrizLogica[posX + 1][posY].run();
+            getObject(posX+1,posY).run();
         }
-        else if (this.matrizLogica[posX + 1][posY]._ID == this.BLOQUENORMAL) {
+        else if (getObject(posX+1,posY)._ID === BLOQUENORMAL) {
             this.setObject(posX + 1, posY, new espacioLibre(this));
             destruir.play();
         }
         else if(
-            matrizLogica[posX+1][posY]._ID == this.ENEMY1 ||
-            matrizLogica[posX+1][posY]._ID == this.ENEMY2 ||
-            matrizLogica[posX+1][posY]._ID == this.ENEMY3 ||
-            matrizLogica[posX+1][posY]._ID == this.OBJETIVO1 ||
-            matrizLogica[posX+1][posY]._ID == this.OBJETIVO2
+            getObject(posX+1,posY)._ID === ENEMY1 ||
+            getObject(posX+1,posY)._ID === ENEMY2 ||
+            getObject(posX+1,posY)._ID === ENEMY3 ||
+            getObject(posX+1,posY)._ID === OBJETIVO1 ||
+            getObject(posX+1,posY)._ID === OBJETIVO2
         ){
             matrizLogica[posX+1][posY].eliminar();
         }
@@ -424,29 +420,28 @@ function getHeroe() {
 
 /*PERMITE ACTUALIZAR LA MATRIZ GRÁFICA A PARTIR DE LA MATRIZ LÓGICA*/
 function actualizar(){
-    var canvas = document.getElementById('scene');
-    var context = canvas.getContext('2d');
+    let canvas = document.getElementById('scene');
+    let context = canvas.getContext('2d');
 
-    for(var x = 0;x<tamMatriz;x++){
-
-        for(var y=0;y<tamMatriz;y++){
-            if(matrizLogica[x][y].getID == this.EMPTYSPACE){
+    for(let x = 0;x<tamMatriz;x++){
+        for(let y=0;y<tamMatriz;y++){
+            if(getObject(x,y).getID === EMPTYSPACE){
                 context.drawImage(document.getElementById('empty'), x*47, y*47);
             }
-            else if(matrizLogica[x][y].getID == this.BORDE){
+            else if(getObject(x,y).getID === BORDE){
                 context.drawImage(document.getElementById('borde'), x*47, y*47);
             }
-            else if(matrizLogica[x][y].getID == this.BLOQUENORMAL){
+            else if(getObject(x,y).getID === BLOQUENORMAL){
                 context.drawImage(document.getElementById('bloque'), x*47, y*47);
             }
-            else if(matrizLogica[x][y].getID == this.OBJETIVO1 ){
+            else if(getObject(x,y).getID === OBJETIVO1 ){
                 context.drawImage(document.getElementById('Objetivo1'), x*47, y*47);
             }
-            else if(matrizLogica[x][y].getID == this.OBJETIVO2){
+            else if(getObject(x,y).getID === OBJETIVO2){
                 context.drawImage(document.getElementById('Objetivo2'), x*47, y*47);
             }
-            else if(this.matrizLogica[x][y].getID == this.HEROE){
-                switch (matrizLogica[x][y].getOrientacion){
+            else if(getObject(x,y).getID === HEROE){
+                switch (getObject(x,y).getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('heroeLeft'), x*47, y*47);
                         break;
@@ -461,13 +456,11 @@ function actualizar(){
                         break;
                 }
             }
-            else if(matrizLogica[x][y].getID == this.BULLET){
+            else if(getObject(x,y).getID === BULLET){
                 context.drawImage(document.getElementById('bala'), x*47, y*47);
             }
-            else if(this.matrizLogica[x][y].getID == this.ENEMY1){
-                //debugger;
-                //console.log(matrizLogica[x][y].getOrientacion);
-                switch (matrizLogica[x][y].getOrientacion){
+            else if(getObject(x,y).getID === ENEMY1){
+                switch (getObject(x,y).getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('enemy1Left'), x*47, y*47);
                         break;
@@ -482,10 +475,8 @@ function actualizar(){
                         break;
                 }
             }
-            else if(this.matrizLogica[x][y].getID == this.ENEMY2){
-                //debugger;
-                //console.log(matrizLogica[x][y].getOrientacion);
-                switch (matrizLogica[x][y].getOrientacion){
+            else if(getObject(x,y).getID === ENEMY2){
+                switch (getObject(x,y).getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('enemy2Left'), x*47, y*47);
                         break;
@@ -500,10 +491,8 @@ function actualizar(){
                         break;
                 }
             }
-            else if(this.matrizLogica[x][y].getID == this.ENEMY3){
-                //debugger;
-                //console.log(matrizLogica[x][y].getOrientacion);
-                switch (matrizLogica[x][y].getOrientacion){
+            else if(getObject(x,y).getID === ENEMY3){
+                switch (getObject(x,y).getOrientacion){
                     case 2://IZQUIERDA
                         context.drawImage(document.getElementById('enemy3Left'), x*47, y*47);
                         break;
@@ -530,15 +519,15 @@ function addNewEnemy(){
     if(getObject(posX,posY).espacioLibre()){//BARRERA
         if(tankType == 1)
         {
-            this.setObject(posX,posY, new tankEnemy1(posX,posY,1,this,ENEMY1));// listo
+            setObject(posX,posY, new tankEnemy1(posX,posY,1,this,ENEMY1));// listo
             EnemyList1.push(getObject(posX,posY));
         }
         else if(tankType == 2){
-            this.setObject(posX,posY, new tankEnemy2(posX,posY,3,this, ENEMY2));
+            setObject(posX,posY, new tankEnemy2(posX,posY,3,this, ENEMY2));
             EnemyList2y3.push(getObject(posX,posY));
         }
         else{
-            this.setObject(posX,posY, new tankEnemy3(posX,posY, this,ENEMY3,2));
+            setObject(posX,posY, new tankEnemy3(posX,posY, this,ENEMY3,2));
             EnemyList2y3.push(getObject(posX,posY));
         }
         totalEnemigos++;
@@ -551,9 +540,9 @@ function addNewEnemy(){
 
 /*PERMITE EJECUTAR EL TEMPORIZADOR, EMPIEZA EN 2:00 MINUTOS*/
 function startTimer(duracion, objeto) {
-    var timer = duracion, minutos, segundos;
+    let timer = duracion, minutos, segundos;
     countDown =setInterval(function () {
-        minutos = parseInt(timer / 60, 10)
+        minutos = parseInt(timer / 60, 10);
         segundos = parseInt(timer % 60, 10);
 
         minutos = minutos < 10 ? "0" + minutos : minutos;
@@ -569,9 +558,9 @@ function startTimer(duracion, objeto) {
 }
 
 function quitarBalasMatriz(tanke) {
-    for(var x = 0;x<tamMatriz;x++){
-        for(var y=0;y<tamMatriz;y++){
-            if(matrizLogica[x][y].getID == tanke){
+    for(let x = 0; x < tamMatriz; x++){
+        for(let y = 0; y < tamMatriz; y++){
+            if(getObject(x,y).getID === tanke){
                 setObject(x,y,new espacioLibre(this));
                 sleep(50);
             }
@@ -609,63 +598,63 @@ function timer() {
 }
 
 function dispararEnemigo(posX,posY,pertenece,orientacion) {
-    if(orientacion == ARRIBA){
+    if(orientacion === ARRIBA){
         posY--;
     }
-    else if(orientacion == ABAJO){
+    else if(orientacion === ABAJO){
         posY++;
     }
-    else if(orientacion == DERECHA){
+    else if(orientacion === DERECHA){
         posX++;
     }
-    else if(orientacion == IZQUIERDA){
+    else if(orientacion === IZQUIERDA){
         posX--;
     }
-    if(getObject(posX,posY)._ID != BLOQUENORMAL && getObject(posX,posY)._ID != BORDE &&
-       getObject(posX,posY)._ID != OBJETIVO1 && getObject(posX,posY)._ID != OBJETIVO2 &&
-       getObject(posX,posY)._ID != ENEMY1 && getObject(posX,posY)._ID != ENEMY2 && getObject(posX,posY)._ID != ENEMY3
-       && getObject(posX,posY)._ID != EMPTYSPACE){
+    if(getObject(posX,posY)._ID !== BLOQUENORMAL && getObject(posX,posY)._ID !== BORDE &&
+       getObject(posX,posY)._ID !== OBJETIVO1 && getObject(posX,posY)._ID !== OBJETIVO2 &&
+       getObject(posX,posY)._ID !== ENEMY1 && getObject(posX,posY)._ID !== ENEMY2 && getObject(posX,posY)._ID !== ENEMY3
+       && getObject(posX,posY)._ID !== EMPTYSPACE){
         getObject(posX,posY).eliminar();
     }
 }
 
 function buscarHeroe(orientacion,posX,posY) {debugger;
     let result = false;
-    if(orientacion == ARRIBA){
+    if(orientacion === ARRIBA){
         for(let x = 0;x <tamMatriz;x++){
             for(let y =0;y<tamMatriz;y++){
                 posY--;
-                if(posY > 0 && getObject(posX,posY)._ID == HEROE){
+                if(posY > 0 && getObject(posX,posY)._ID === HEROE){
                     result = true;
                 }
             }
         }
     }
-    else if(orientacion == ABAJO){
+    else if(orientacion === ABAJO){
         for(let x = 0;x <tamMatriz;x++){
             for(let y =0;y<tamMatriz;y++){
                 posY++;
-                if(posY < tamMatriz-1 && getObject(posX,posY)._ID == HEROE){
+                if(posY < tamMatriz-1 && getObject(posX,posY)._ID === HEROE){
                     result = true;
                 }
             }
         }
     }
-    else if(orientacion == IZQUIERDA){
+    else if(orientacion === IZQUIERDA){
         for(let x = 0;x <tamMatriz;x++){
             for(let y =0;y<tamMatriz;y++){
                 posX--;
-                if(posX > 0 && getObject(posX,posY)._ID == HEROE){
+                if(posX > 0 && getObject(posX,posY)._ID === HEROE){
                     result = true;
                 }
             }
         }
     }
-    else if(orientacion == DERECHA){
+    else if(orientacion === DERECHA){
         for(let x = 0;x <tamMatriz;x++){
             for(let y =0;y<tamMatriz;y++){
                 posX++;
-                if(posX < tamMatriz-1 &&  getObject(posX,posY)._ID == HEROE){
+                if(posX < tamMatriz-1 &&  getObject(posX,posY)._ID === HEROE){
                     result = true;
                 }
             }
@@ -683,16 +672,15 @@ window.onload= function () {
     juegoNormal.play();
 
     hiloEnemy1 = setInterval(function () {
-        for(var i = 0; i < EnemyList1.length;i++){
+        for(let i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
             //EnemyList1[i].dispararEnemy();
         }
     },300); // los enemigos se mueven y disparan cada 0.3 segundos
 
     hiloEnemy2y3 = setInterval(function () {
-        for(var i = 0; i < EnemyList2y3.length;i++){
+        for(let i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
-            //EnemyList2y3[i].dispararEnemy();
         }
     },900); // los enemigos se mueven y disparan cada 0.9 segundos
 

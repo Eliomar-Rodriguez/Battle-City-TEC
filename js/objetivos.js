@@ -30,9 +30,9 @@ class objetivos{
         this._vida--;
         if (this._vida == 0){
             muerteObjeto.play();
-            this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-            this._coordinador.restarObjetivos();
-            this._coordinador.verificarEstadoJuego();
+            setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+            restarObjetivos();
+            verificarEstadoJuego();
         }
     }
 

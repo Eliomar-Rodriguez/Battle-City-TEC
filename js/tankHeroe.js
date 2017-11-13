@@ -52,25 +52,25 @@ class tankHeroe{
         //VA AGREGAR UN ESPACIO VACIO EN DONDE SE ENCONTRABA EL HEROE, O SEA SE VA EMPEZAR A MOVER
         setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
 
-        if(orientacionActual == ARRIBA){
+        if(orientacionActual === ARRIBA){
             this._orientacion = ARRIBA;
             if(this._coordinador.getObject(this._posX,this._posY-1).espacioLibre()){
                 this._posY = this._posY-1;
             }
         }
-        if(orientacionActual == ABAJO){
+        if(orientacionActual === ABAJO){
             this._orientacion = ABAJO;
             if(getObject(this._posX,this._posY+1).espacioLibre()){
                 this._posY = this._posY+1;
             }
         }
-        if(orientacionActual == IZQUIERDA){
+        if(orientacionActual === IZQUIERDA){
             this._orientacion = IZQUIERDA;
             if(getObject(this._posX-1,this._posY).espacioLibre()){
                 this._posX = this._posX-1;
             }
         }
-        if(orientacionActual == DERECHA){
+        if(orientacionActual === DERECHA){
             this._orientacion = DERECHA;
             if(getObject(this._posX+1,this._posY).espacioLibre()){
                 this._posX = this._posX+1;
@@ -78,33 +78,30 @@ class tankHeroe{
         }
         /*ACTUALIZA LA POSICIÓN DEL HEROE*/
         setObject(this._posX,this._posY,this);
-        //>>>>this._coordinador.actualizar();
     }
+
     eliminar(){
         this._vidas--;
+        bajarVidasHeroe(this._vidas);
         disparoAHeroe.play();
         setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         if(this._vidas > 1){
             this._posX = 7;this._posY = 13;
             this._orientacion = 0;
-            bajarVidasHeroe(this._vidas);
             setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             setObject(this._posX,this._posY,this);
         }
-        else if(this._vidas == 0){
+        else if(this._vidas === 0){
             muerteHeroe.play();
             terminarJuego(false);
         }
     }
-
     esDestructible(){
         return true;
     }
-
     esObjetivo(){
         return false;
     }
-
     espacioLibre(){
         return false;
     }
