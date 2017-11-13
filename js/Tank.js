@@ -96,7 +96,10 @@ class Tank{
         this._coordinador.setObject(this._posX,this._posY,this);
     }
     dispararEnemy(){
-        console.log("El tanque que disparó fue: "+this.getID)
+        if(this._posY == this._coordinador.getHeroe()._posY ||
+           this._posX == this._coordinador.getHeroe()._posX){
+            this._coordinador.dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
+        }
     }
     generarRandom(limite){
         return Math.floor((Math.random() * limite) + 1) - 1;

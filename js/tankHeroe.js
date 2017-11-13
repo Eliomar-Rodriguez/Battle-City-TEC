@@ -87,12 +87,13 @@ class tankHeroe{
         if(this._vidas > 1){
             this._posX = 7;this._posY = 13;
             this._orientacion = 1;
+            this._coordinador.bajarVidasHeroe(this._vidas);
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.setObject(this._posX,this._posY,this);
         }
-        else{
+        if(this._vidas == 0){
             muerteHeroe.play();
-            this.coordinador.terminarJuego(false);
+            this._coordinador.terminarJuego(false);
         }
     }
 

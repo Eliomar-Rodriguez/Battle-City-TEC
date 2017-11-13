@@ -57,7 +57,7 @@ balaPared.loop = false;
 var tiempo = 0; var countDown;
 
 var tamMatriz = 15; var cantidadMaxBloques = 50; var totalObjetivos = 2; var totalEnemigos = 3;  var cantidadEnemigosVivos = 0;
-var nivelActual = 1;
+var nivelActual = 1; var totalVidasHeroe = 3;
 /*-----------------------VARIABLES NECESARIAS-----------------------------------------------*/
 var ARRIBA = 0; var ABAJO = 1; var IZQUIERDA = 2; var DERECHA = 3;//DIRECCIONES POSIBLES PARA MOVERSE
 
@@ -187,9 +187,9 @@ function terminarJuego(estado) {
     }
     else{
         swal(
-            'Good job!',
+            'Good Luck Next Time!',
             'Has Perdido!',
-            'success'
+            'error'
         );
         game_over.play();
     }
@@ -201,6 +201,16 @@ function terminarJuego(estado) {
     clearInterval(countDown);
 
 }
+
+function bajarVidasHeroe(vidas) {
+    document.getElementById("txtVidas").textContent = vidas;
+    swal(
+        'Ouch!!',
+        'Una vida menos!!',
+        'error'
+    );
+}
+
 
 /*
 * funcion encargada de la reproduccion de canciones o audios del juego
@@ -287,7 +297,6 @@ function getObject(posX,posY) {
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
     if (orientacion == this.ARRIBA) {
-        debugger;
         if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
             this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
 
@@ -420,7 +429,7 @@ function actualizar(){
 
     for(var x = 0;x<tamMatriz;x++){
 
-        for(var y=0;y<tamMatriz;y++){debugger;
+        for(var y=0;y<tamMatriz;y++){
             if(matrizLogica[x][y].getID == this.EMPTYSPACE){
                 context.drawImage(document.getElementById('empty'), x*47, y*47);
             }
@@ -599,42 +608,24 @@ function timer() {
     startTimer(tiempo, document.getElementById("txtTiempo"));//SE LLAMA LA FUNCIÓN PARA CREAR EL TIMER
 }
 
-function dispararEnemigo(posX,posY,pertenece,orientacion) {debugger;
-    if (orientacion == this.ARRIBA) {
-        if (this.matrizLogica[posX][posY - 1]._ID == this.EMPTYSPACE) {
-            this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
-            matrizLogica[posX][posY - 1].run();
-        }
-        else if (this.matrizLogica[posX][posY - 1]._ID == HEROE) {
-            getObject(posX,posY-1).eliminar();
-        }
+function dispararEnemigo(posX,posY,pertenece,orientacion) {
+    if(orientacion == ARRIBA){
+        posY--;
     }
-    else if (orientacion == this.ABAJO) {
-        if (this.matrizLogica[posX][posY + 1]._ID == this.EMPTYSPACE) {
-            this.setObject(posX, posY + 1, new bala(posX, posY + 1, orientacion, pertenece, this));
-            this.matrizLogica[posX][posY + 1].run();
-        }
-        else if (this.matrizLogica[posX][posY + 1]._ID == HEROE) {
-            getObject(posX,posY+1).eliminar();
-        }
+    else if(orientacion == ABAJO){
+        posY++;
     }
-    else if (orientacion == this.IZQUIERDA) {
-        if (this.matrizLogica[posX - 1][posY]._ID == this.EMPTYSPACE) {
-            this.setObject(posX - 1, posY, new bala(posX - 1, posY, orientacion, pertenece, this));
-            this.matrizLogica[posX - 1][posY].run();
-        }
-        else if (this.matrizLogica[posX-1][posY]._ID == HEROE) {
-            getObject(posX-1,posY).eliminar();
-        }
+    else if(orientacion == DERECHA){
+        posX++;
     }
-    else if (orientacion == this.DERECHA) {
-        if (this.matrizLogica[posX + 1][posY]._ID == this.EMPTYSPACE) {
-            this.setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
-            this.matrizLogica[posX + 1][posY].run();
-        }
-        else if (this.matrizLogica[posX+1][posY]._ID == HEROE) {
-            getObject(posX+1,posY).eliminar();
-        }
+    else if(orientacion == IZQUIERDA){
+        posX--;
+    }
+    if(getObject(posX,posY)._ID != BLOQUENORMAL && getObject(posX,posY)._ID != BORDE &&
+       getObject(posX,posY)._ID != OBJETIVO1 && getObject(posX,posY)._ID != OBJETIVO2 &&
+       getObject(posX,posY)._ID != ENEMY1 && getObject(posX,posY)._ID != ENEMY2 && getObject(posX,posY)._ID != ENEMY3
+       && getObject(posX,posY)._ID != EMPTYSPACE){
+        getObject(posX,posY).eliminar();
     }
 }
 
@@ -682,22 +673,27 @@ window.onload= function () {
     hiloEnemy1 = setInterval(function () {
         for(var i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
-            EnemyList1[i].dispararEnemy();
+            //EnemyList1[i].dispararEnemy();
         }
     },300); // los enemigos se mueven y disparan cada 0.3 segundos
 
     hiloEnemy2y3 = setInterval(function () {
         for(var i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
-            EnemyList2y3[i].dispararEnemy();
+            //EnemyList2y3[i].dispararEnemy();
         }
     },900); // los enemigos se mueven y disparan cada 0.9 segundos
 
-    hiloBalasEnemy1 = setInterval(function () {
-        for(var i = 0; i < bulletList.length;i++){
-            bulletList[i].dispararEnemy();
+    let test = setInterval(function () {
+        for(let i = 0; i < EnemyList2y3.length;i++){
+            EnemyList2y3[i].run();
+            EnemyList2y3[i].dispararEnemy();
         }
-    },700); // los enemigos se mueven y disparan cada 0.7 segundos
+        for(let i = 0; i < EnemyList1.length;i++){
+            EnemyList1[i].run();
+            EnemyList1[i].dispararEnemy();
+        }
+    },5000); // los enemigos se mueven y disparan cada 0.7 segundos
 
     intervalo = setInterval(addNewEnemy, 15000); // actualiza enemigos cada 15 segundos
     refreshPantalla = setInterval(actualizar,60); // actualiza la ventana de juego cada 0.06 segundos
