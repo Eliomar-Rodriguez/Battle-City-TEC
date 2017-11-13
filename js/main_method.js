@@ -109,12 +109,12 @@ function crearMatriz() {
         posY = generarPosicionAleatoria();
         if(getObject(posX,posY).espacioLibre()){
             if(!objetivo1Usado){
-                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO1));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO1,1));
                 objetivo1Usado=true;
                 totalObjetivos--;
             }
             else if(!objetivo2Usado){
-                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO2));
+                setObject(posX,posY,new objetivos(posX,posY,this,OBJETIVO2,2));
                 objetivo2Usado=true;
                 totalObjetivos--;
             }
