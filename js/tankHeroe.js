@@ -86,7 +86,7 @@ class tankHeroe{
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         if(this._vidas > 1){
             this._posX = 7;this._posY = 13;
-            this._orientacion = 1;
+            this._orientacion = 0;
             this._coordinador.bajarVidasHeroe(this._vidas);
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.setObject(this._posX,this._posY,this);

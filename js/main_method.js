@@ -12,7 +12,7 @@
 
 var intervalo;
 var hiloEnemy1, hiloEnemy2y3, hiloBalasEnemy1;
-var EnemyList2y3 = [], EnemyList1 = [], bulletList = [];
+var EnemyList2y3 = [], EnemyList1 = [], bulletList = []; var disparoEnemigo;
 var refreshPantalla;
 var finJuego = false;
 
@@ -629,37 +629,49 @@ function dispararEnemigo(posX,posY,pertenece,orientacion) {
     }
 }
 
-function buscaEnMatriz(enemigo) {console.log("ANTES: "+enemigo.getOrientacion);
-    if(enemigo.getPosX < heroe.getPosX){
-        if(enemigo.getPosY == heroe.getPosY){//DEBE APUNTAR ARRIBA
-            enemigo.setOrientacion = ARRIBA;
-            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+function buscarHeroe(orientacion,posX,posY) {debugger;
+    let result = false;
+    if(orientacion == ARRIBA){
+        for(let x = 0;x <tamMatriz;x++){
+            for(let y =0;y<tamMatriz;y++){
+                posY--;
+                if(posY > 0 && getObject(posX,posY)._ID == HEROE){
+                    result = true;
+                }
+            }
         }
     }
-    else{
-        if(enemigo.getPosY == heroe.getPosY){//DEBE APUNTAR ABAJO
-            enemigo.setOrientacion = ABAJO;
-            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+    else if(orientacion == ABAJO){
+        for(let x = 0;x <tamMatriz;x++){
+            for(let y =0;y<tamMatriz;y++){
+                posY++;
+                if(posY < tamMatriz-1 && getObject(posX,posY)._ID == HEROE){
+                    result = true;
+                }
+            }
         }
     }
-    if(enemigo.getPosY < heroe.getPosY){
-        if(enemigo.getPosX == heroe.getPosX){
-            enemigo.setOrientacion = IZQUIERDA;
-            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+    else if(orientacion == IZQUIERDA){
+        for(let x = 0;x <tamMatriz;x++){
+            for(let y =0;y<tamMatriz;y++){
+                posX--;
+                if(posX > 0 && getObject(posX,posY)._ID == HEROE){
+                    result = true;
+                }
+            }
         }
     }
-    else{
-        if(enemigo.getPosX == heroe.getPosX){
-            enemigo.setOrientacion = DERECHA;
-            dispararEnemigo(enemigo.getPosX,enemigo.getPosY,enemigo.getID,enemigo.getOrientacion);
+    else if(orientacion == DERECHA){
+        for(let x = 0;x <tamMatriz;x++){
+            for(let y =0;y<tamMatriz;y++){
+                posX++;
+                if(posX < tamMatriz-1 &&  getObject(posX,posY)._ID == HEROE){
+                    result = true;
+                }
+            }
         }
     }
-    console.log("DESPUES: "+enemigo.getOrientacion);
-}
-
-/*BUSCA SI LA FILA X O LA COLUMNA Y ES IGUAL A LA DEL HEROE DESPUÉS DEL MOVIMIENTO REALIZADO*/
-function compararPosHeroe(enemigo){
-    buscaEnMatriz(enemigo);
+    return result;
 }
 
 /*INICIAR JUEGO*/
@@ -684,16 +696,14 @@ window.onload= function () {
         }
     },900); // los enemigos se mueven y disparan cada 0.9 segundos
 
-    let test = setInterval(function () {
+    disparoEnemigo = setInterval(function () {
         for(let i = 0; i < EnemyList2y3.length;i++){
-            EnemyList2y3[i].run();
             EnemyList2y3[i].dispararEnemy();
         }
         for(let i = 0; i < EnemyList1.length;i++){
-            EnemyList1[i].run();
             EnemyList1[i].dispararEnemy();
         }
-    },5000); // los enemigos se mueven y disparan cada 0.7 segundos
+    },100); // se mantiene atento si el heroe está en el camino de algun tanque enemigo
 
     intervalo = setInterval(addNewEnemy, 15000); // actualiza enemigos cada 15 segundos
     refreshPantalla = setInterval(actualizar,60); // actualiza la ventana de juego cada 0.06 segundos

@@ -95,10 +95,13 @@ class Tank{
         }
         this._coordinador.setObject(this._posX,this._posY,this);
     }
-    dispararEnemy(){
+    dispararEnemy(objeto){
         if(this._posY == this._coordinador.getHeroe()._posY ||
-           this._posX == this._coordinador.getHeroe()._posX){
-            this._coordinador.dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
+           this._posX == this._coordinador.getHeroe()._posX)
+        {
+            if(this._coordinador.buscarHeroe(this._orientacion,this._posX,this._posY)){
+                this._coordinador.dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
+            }
         }
     }
     generarRandom(limite){
