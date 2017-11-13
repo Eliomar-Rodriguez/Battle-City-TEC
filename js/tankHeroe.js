@@ -84,10 +84,15 @@ class tankHeroe{
         this._vidas--;
         //this.coordinador.ejecutarSonido("bajaVidaHeroe");
         this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-        if(this._vidas > 1){
+        if(this._vidas > 0){
             this._posX = 7;this._posY = 13;
             this._orientacion = 0;
-            this._coordinador.bajarVidasHeroe(this._vidas);
+            document.getElementById("txtVidas").textContent = this._vidas;
+            swal(
+                'Ouch!!',
+                'Una vida menos!!',
+                'error'
+            );
             this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._coordinador.setObject(this._posX,this._posY,this);
         }
