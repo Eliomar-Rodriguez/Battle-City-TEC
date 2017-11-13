@@ -95,7 +95,9 @@ class Tank{
     }
     dispararEnemy(){
         if(this._posY == getHeroe()._posY || this._posX == getHeroe()._posX){
-            dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
+            if(this._coordinador.buscarHeroe(this._orientacion,this._posX,this._posY)){
+                dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
+            }
         }
     }
     generarRandom(limite){
