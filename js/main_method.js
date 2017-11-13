@@ -663,13 +663,14 @@ window.onload= function () {
     hiloEnemy1 = setInterval(function () {
         for(let i = 0; i < EnemyList1.length;i++){
             EnemyList1[i].run();
-            //EnemyList1[i].dispararEnemy();
+            EnemyList1[i].dispararEnemy();
         }
     },300); // los enemigos se mueven y disparan cada 0.3 segundos
 
     hiloEnemy2y3 = setInterval(function () {
         for(let i = 0; i < EnemyList2y3.length;i++){
             EnemyList2y3[i].run();
+            EnemyList1[i].dispararEnemy();
         }
     },900); // los enemigos se mueven y disparan cada 0.9 segundos
 

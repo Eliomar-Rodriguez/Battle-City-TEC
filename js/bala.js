@@ -40,6 +40,7 @@ class bala{
         this._estadoBala = estado;
     }
     moverBala(orientacion){
+        actualizar();
         let solicitud;
         if(orientacion === ARRIBA){
             this._orientacion = ARRIBA;
