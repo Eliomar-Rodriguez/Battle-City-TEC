@@ -21,14 +21,14 @@ class objetivos{
         this._posX = x;
     }
     get getPosY(){
-        return this._posX;
+        return this._posY;
     }
     set setPosY(y){
         this._posY = y;
     }
     eliminar(){
         this._vida--;
-        if (this._vida == 0){
+        if (this._vida === 0){
             muerteObjeto.play();
             setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             restarObjetivos();

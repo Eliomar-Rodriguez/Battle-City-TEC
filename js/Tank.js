@@ -49,8 +49,8 @@ class Tank{
     * EL HILO SE TERMINA HASTA QUE EL ESTADO DE VIDA DEL TANK SEA FALSE
     * */
     run(){
-        var opciones= 0;//CONTADOR QUE DEFINE CUANTAS OPCIONES DISPONIBLES TENGO PARA ESCOGER
-        var camDisponibles = [];//TENDRÁ LAS POSIBLES VIAS PARA DONDE SE PODRÁ DESPLAZAR EL TANK
+        let opciones= 0;//CONTADOR QUE DEFINE CUANTAS OPCIONES DISPONIBLES TENGO PARA ESCOGER
+        let camDisponibles = [];//TENDRÁ LAS POSIBLES VIAS PARA DONDE SE PODRÁ DESPLAZAR EL TANK
         if(getObject(this._posX,this._posY-1).espacioLibre()){ //ARRIBA
             camDisponibles.push(ARRIBA);
             opciones++;
@@ -67,35 +67,35 @@ class Tank{
             camDisponibles.push(DERECHA);
             opciones++;
         }
-        if(opciones != 0){
-            var numRandom = this.generarRandom(opciones);
+        if(opciones !== 0){
+            let numRandom = this.generarRandom(opciones);
             this.moverTank(camDisponibles[numRandom]);
         }
     }
 
     moverTank(orientacion){
-        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-        if(orientacion == ARRIBA){
+        setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+        if(orientacion === ARRIBA){
             this._orientacion = ARRIBA;
             this._posY = this._posY-1;
         }
-        else if(orientacion == ABAJO){
+        else if(orientacion === ABAJO){
             this._orientacion = ABAJO;
             this._posY = this._posY+1;
         }
-        else if(orientacion == IZQUIERDA){
+        else if(orientacion === IZQUIERDA){
             this._orientacion = IZQUIERDA;
             this._posX = this._posX-1;
         }
-        else if(orientacion == DERECHA){
+        else if(orientacion === DERECHA){
             this._orientacion = DERECHA;
             this._posX = this._posX+1;
         }
         setObject(this._posX,this._posY,this);
     }
     dispararEnemy(){
-        if(this._posY == getHeroe()._posY || this._posX == getHeroe()._posX){
-            if(this._coordinador.buscarHeroe(this._orientacion,this._posX,this._posY)){
+        if(this._posY === getHeroe()._posY || this._posX === getHeroe()._posX){
+            if(buscarHeroe(this._orientacion,this._posX,this._posY)){
                 dispararEnemigo(this._posX,this._posY,this._ID,this._orientacion);
             }
         }

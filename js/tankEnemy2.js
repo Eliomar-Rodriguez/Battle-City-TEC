@@ -24,7 +24,7 @@ class tankEnemy2 extends Tank{
     }
     eliminar(){
         this._resistencia--;
-        if(this._resistencia == 0){
+        if(this._resistencia === 0){
             setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             borrarEnemigo(this,1);
             muerteEnemy.play();

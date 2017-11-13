@@ -1,9 +1,8 @@
 
 class bala{
-
     constructor(x,y,orientacion,balaTanke,parteLogica){
         this._coordinador = parteLogica;
-        this._ID = this._coordinador.BULLET;
+        this._ID = BULLET;
         this._posX = x;
         this._posY = y;
         this._orientacion = orientacion;
@@ -41,119 +40,114 @@ class bala{
         this._estadoBala = estado;
     }
     moverBala(orientacion){
-        this._coordinador.actualizar();
-        var solicitud;
-        if(orientacion == this._coordinador.ARRIBA){
-            this._orientacion = this._coordinador.ARRIBA;
-            solicitud = this._coordinador.getObject(this._posX,this._posY-1); // objeto siguiente hacia arriba
+        let solicitud;
+        if(orientacion === ARRIBA){
+            this._orientacion = ARRIBA;
+            solicitud = getObject(this._posX,this._posY-1); // objeto siguiente hacia arriba
             if(solicitud.espacioLibre()){
                 this._posY--;//SIGA MOVIENDOSE
-                //this._coordinador.setObject(this._posX,this._posY+1,solicitud);
-                this._coordinador.setObject(this._posX,this._posY,this);
+                setObject(this._posX,this._posY,this);
             }
             if(solicitud.esDestructible()){
-                if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
+                if(this._tipoBala === BALAHEROE){//DESTRUYE LOS OBJETOS
                     solicitud.eliminar();//DEPEDIENDO DEL OBJETO A QUIEN PERTENEZCA ACCIONA ALGO
                     this._estadoBala = false;
-                    this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                    setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 }
-                if(this._tipoBala == this._coordinador.BALAENEMIGO){
-                    if(solicitud.getID == this._coordinador.HEROE){
+                if(this._tipoBala === BALAENEMIGO){
+                    if(solicitud.getID === HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
                         muerteHeroe.play();
                     }
                 }
             }
-            if(solicitud.getID == this._coordinador.BORDE){
+            if(solicitud.getID === BORDE){
                 this._estadoBala = false;
-                this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 balaPared.play();
             }
         }
-        else if(orientacion == this._coordinador.ABAJO){
-            this._orientacion = this._coordinador.ABAJO;
-            solicitud = this._coordinador.getObject(this._posX,this._posY+1);
+        else if(orientacion === ABAJO){
+            this._orientacion = ABAJO;
+            solicitud = getObject(this._posX,this._posY+1);
             if(solicitud.espacioLibre()){
                 this._posY++;
-                //this._coordinador.setObject(this._posX,this._posY-1,solicitud);
-                this._coordinador.setObject(this._posX,this._posY,this);
+                setObject(this._posX,this._posY,this);
                 return;
             }
             if(solicitud.esDestructible()){
-                if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
+                if(this._tipoBala === BALAHEROE){//DESTRUYE LOS OBJETOS
                     solicitud.eliminar();//DEPEDIENDO DEL OBJETO A QUIEN PERTENEZCA ACCIONA ALGO
                     this._estadoBala = false;
-                    this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                    setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 }
-                if(this._tipoBala == this._coordinador.BALAENEMIGO){
-                    if(solicitud.getID == this._coordinador.HEROE){
+                if(this._tipoBala === BALAENEMIGO){
+                    if(solicitud.getID === HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
                         muerteHeroe.play();
                     }
                 }
             }
-            if(solicitud.getID == this._coordinador.BORDE){
+            if(solicitud.getID === BORDE){
                 this._estadoBala = false;
-                this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 balaPared.play();
             }
         }
-        else if(orientacion == this._coordinador.IZQUIERDA){
-            this._orientacion = this._coordinador.IZQUIERDA;
-            solicitud = this._coordinador.getObject(this._posX-1,this._posY);
+        else if(orientacion === IZQUIERDA){
+            this._orientacion = IZQUIERDA;
+            solicitud = getObject(this._posX-1,this._posY);
             if(solicitud.espacioLibre()){
                 this._posX--;
-                //this._coordinador.setObject(this._posX+1,this._posY,solicitud);
-                this._coordinador.setObject(this._posX,this._posY,this);
+                setObject(this._posX,this._posY,this);
                 return;
             }
             if(solicitud.esDestructible()){
-                if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
+                if(this._tipoBala === BALAHEROE){//DESTRUYE LOS OBJETOS
                     solicitud.eliminar();//DEPEDIENDO DEL OBJETO A QUIEN PERTENEZCA ACCIONA ALGO
                     this._estadoBala = false;
-                    this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                    setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 }
-                if(this._tipoBala == this._coordinador.BALAENEMIGO){
-                    if(solicitud.getID == this._coordinador.HEROE){
+                if(this._tipoBala === BALAENEMIGO){
+                    if(solicitud.getID === HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
                         muerteHeroe.play();
                     }
                 }
             }
-            if(solicitud.getID == this._coordinador.BORDE){
+            if(solicitud.getID === BORDE){
                 this._estadoBala = false;
-                this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 balaPared.play();
             }
         }
-        else if(orientacion == this._coordinador.DERECHA){
-            this._orientacion = this._coordinador.DERECHA;
-            solicitud = this._coordinador.getObject(this._posX+1,this._posY);
+        else if(orientacion === DERECHA){
+            this._orientacion = DERECHA;
+            solicitud = getObject(this._posX+1,this._posY);
             if(solicitud.espacioLibre()){
                 this._posX++;
-                this._coordinador.setObject(this._posX,this._posY,this);
-                //this._coordinador.setObject(this._posX-1,this._posY,solicitud);
+                setObject(this._posX,this._posY,this);
             }
             if(solicitud.esDestructible()){
-                if(this._tipoBala == this._coordinador.BALAHEROE){//DESTRUYE LOS OBJETOS
+                if(this._tipoBala === BALAHEROE){//DESTRUYE LOS OBJETOS
                     solicitud.eliminar();//DEPEDIENDO DEL OBJETO A QUIEN PERTENEZCA ACCIONA ALGO
                     this._estadoBala = false;
-                    this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                    setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 }
-                if(this._tipoBala == this._coordinador.BALAENEMIGO){
-                    if(solicitud.getID == this._coordinador.HEROE){
+                if(this._tipoBala === BALAENEMIGO){
+                    if(solicitud.getID === HEROE){
                         solicitud.eliminar();
                         this._estadoBala = false;
                         muerteHeroe.play();
                     }
                 }
             }
-            if(solicitud.getID == this._coordinador.BORDE){
+            if(solicitud.getID === BORDE){
                 this._estadoBala = false;
-                this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+                setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
                 balaPared.play();
             }
         }
@@ -161,10 +155,9 @@ class bala{
 
     run(){
         while(this._estadoBala){
-            //this._coordinador.sleep(300);
             this.moverBala(this._orientacion);
         }
-        this._coordinador.quitarBalasMatriz(this.getID);
+        quitarBalasMatriz(this.getID);
     }
 
     esDestructible(){

@@ -8,12 +8,11 @@
 class espacioLibre{
     constructor(parteLogica){
         this._coordinador = parteLogica;
-        this._ID = this._coordinador.EMPTYSPACE;
+        this._ID = EMPTYSPACE;
     }
     get getID(){
         return this._ID;
     }
-
     esDestructible(){
         return false;
     }

@@ -80,9 +80,9 @@ function crearMatriz() {
         matrizLogica[x] = new Array(tamMatriz);//SE HACE ASÍ PARA PODER CREAR UNA MATRIZ DIMENSIONAL -> [][] <-
         for(let y = 0; y < tamMatriz; y++){
             if(x === tamMatriz -1 || y === tamMatriz - 1 || x === 0 || y === 0)
-                matrizLogica[x][y] = new bloqueBarrera(this); //SE CREA UN ELEMENTO BARRERA
+                setObject(x,y, new bloqueBarrera(this)); //SE CREA UN ELEMENTO BARRERA
             else
-                matrizLogica[x][y] = new espacioLibre(this);//LOS DEMÁS ELEMENTOS SERÁN ESPACIOS VACÍOS
+                setObject(x,y,new espacioLibre(this));//LOS DEMÁS ELEMENTOS SERÁN ESPACIOS VACÍOS
         }
     }
 
@@ -90,8 +90,8 @@ function crearMatriz() {
     while(cantidadMaxBloques > 0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();//SE GENERAN POSICIONES AL AZAR ENTRE 0 Y 10(TAMAÑO MATRIZ)
-        if(matrizLogica[posX][posY].espacioLibre()){
-            matrizLogica[posX][posY] = new bloque(posX,posY,this); //SE AGREGA EL OBJETO BLOQUE
+        if(getObject(posX,posY).espacioLibre()){
+           setObject(posX,posY,new bloque(posX,posY,this)); //SE AGREGA EL OBJETO BLOQUE
             cantidadMaxBloques--;
         }
     }
@@ -100,7 +100,7 @@ function crearMatriz() {
     setObject(7,13,heroe);
 
     /*CREAR OBJETIVOS*/
-    var objetivo1Usado = false; var objetivo2Usado = false;
+    let objetivo1Usado = false; let objetivo2Usado = false;
     while(totalObjetivos>0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();
@@ -117,15 +117,15 @@ function crearMatriz() {
             }
         }
     }
-    totalObjetivos=2;
+    totalObjetivos = 2;
     document.getElementById("txtObjetivos").textContent = totalObjetivos;
 
     /*CREAR ENEMIGOS LA PRIMERA VEZ*/
-    var usoEnemy1 = false; var usoEnemy2 = false; var usoEnemy3 = false;
+    let usoEnemy1 = false; let usoEnemy2 = false; let usoEnemy3 = false;
     while(totalEnemigos > 0){
         posX = generarPosicionAleatoria();
         posY = generarPosicionAleatoria();
-        if(matrizLogica[posX][posY].espacioLibre()){
+        if(getObject(posX,posY).espacioLibre()){
             if(!usoEnemy1){
                 setObject(posX,posY,new tankEnemy1(posX,posY,1,this,ENEMY1));
                 EnemyList1.push(getObject(posX,posY));
@@ -189,24 +189,16 @@ function terminarJuego(estado) {
             'error'
         );
         game_over.play();
+        muerteHeroe.pause();
     }
+    clearInterval(countDown);
+    document.getElementById("txtVidas").textContent = 0;
     juegoNormal.pause();
-    this.finJuego = true;
+    finJuego = true;
     clearInterval(hiloEnemy1);
     clearInterval(hiloEnemy2y3);
     clearInterval(intervalo);
-    clearInterval(countDown);
 }
-
-function bajarVidasHeroe(vidas) {
-    document.getElementById("txtVidas").textContent = vidas;
-    swal(
-        'Ouch!!',
-        'Una vida menos!!',
-        'error'
-    );
-}
-
 
 /*
 * funcion encargada de la reproduccion de canciones o audios del juego
@@ -253,7 +245,7 @@ function reprMusica(opcion) {
 
 /*PERMITE SABER EN QUE NIVEL SE ENCUENTRA EL JUGADOR, EN CASO DE QUE HAYA TERMINADO EL NIVEL 3 SE TERMINA EL JUEGO*/
 function verificarEstadoJuego() {debugger;
-    if(this.totalObjetivos===0){
+    if(totalObjetivos===0){
         if(nivelActual === 1){
             nivelActual = 2;
             swal(
@@ -287,15 +279,14 @@ function setObject(posX,posY,objetoNuevo){
 
 /*EXTRAE EL OBJETO QUE ESTÁ EN UNA POSICIÓN [X,Y]*/
 function getObject(posX,posY) {
-    return this.matrizLogica[posX][posY];
+    return matrizLogica[posX][posY];
 }
 
 /*PERMITE CREAR LAS BALAS*/
 function disparar(posX,posY,pertenece,orientacion) {
     if (orientacion === ARRIBA) {
         if (getObject(posX,posY-1)._ID === EMPTYSPACE) {
-            this.setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
-
+            setObject(posX, posY - 1, new bala(posX, posY - 1, orientacion, pertenece, this));
             getObject(posX,posY-1).run();
         }
         else if (getObject(posX,posY-1)._ID === BLOQUENORMAL) {
@@ -307,8 +298,7 @@ function disparar(posX,posY,pertenece,orientacion) {
             getObject(posX,posY-1)._ID === ENEMY2 ||
             getObject(posX,posY-1)._ID === ENEMY3 ||
             getObject(posX,posY-1)._ID === OBJETIVO1 ||
-            getObject(posX,posY-1)._ID === OBJETIVO2
-        )
+            getObject(posX,posY-1)._ID === OBJETIVO2)
         {
             getObject(posX,posY-1).eliminar();
         }
@@ -330,8 +320,8 @@ function disparar(posX,posY,pertenece,orientacion) {
             getObject(posX,posY+1)._ID === ENEMY2 ||
             getObject(posX,posY+1)._ID === ENEMY3 ||
             getObject(posX,posY+1)._ID === OBJETIVO1 ||
-            getObject(posX,posY+1)._ID === OBJETIVO2
-        ){
+            getObject(posX,posY+1)._ID === OBJETIVO2)
+        {
             getObject(posX,posY+1).eliminar();
         }
         else{
@@ -362,11 +352,11 @@ function disparar(posX,posY,pertenece,orientacion) {
     }
     else if (orientacion === DERECHA) {
         if (getObject(posX+1,posY)._ID === EMPTYSPACE) {
-            this.setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
+            setObject(posX + 1, posY, new bala(posX + 1, posY, orientacion, pertenece, this));
             getObject(posX+1,posY).run();
         }
         else if (getObject(posX+1,posY)._ID === BLOQUENORMAL) {
-            this.setObject(posX + 1, posY, new espacioLibre(this));
+            setObject(posX + 1, posY, new espacioLibre(this));
             destruir.play();
         }
         else if(
@@ -376,7 +366,7 @@ function disparar(posX,posY,pertenece,orientacion) {
             getObject(posX+1,posY)._ID === OBJETIVO1 ||
             getObject(posX+1,posY)._ID === OBJETIVO2
         ){
-            matrizLogica[posX+1][posY].eliminar();
+            getObject(posX+1,posY).eliminar();
         }
         else{
             balaPared.play();
@@ -385,16 +375,16 @@ function disparar(posX,posY,pertenece,orientacion) {
 }
 
 function borrarEnemigo(tanke,estado) {
-    if(estado == 1){
+    if(estado === 1){
         for(item in EnemyList2y3){
-            if(tanke == EnemyList2y3[item]){
+            if(tanke === EnemyList2y3[item]){
                 EnemyList2y3.splice(item,1);
             }
         }
     }
     else{
         for(item in EnemyList1){
-            if(tanke == EnemyList1[item]){
+            if(tanke === EnemyList1[item]){
                 EnemyList1.splice(item,1);
             }
         }
@@ -402,7 +392,6 @@ function borrarEnemigo(tanke,estado) {
     totalEnemigos--;
     document.getElementById("txtTanksEnemy").textContent = totalEnemigos;
 }
-
 
 function sleep(milliseconds) {
     let start = new Date().getTime();
@@ -513,16 +502,16 @@ function actualizar(){
 
 /*CREA UN NUEVO ENEMIGO*/
 function addNewEnemy(){
-    var posX = this.generarPosicionAleatoria();
-    var posY = this.generarPosicionAleatoria();
-    var tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
+    let posX = generarPosicionAleatoria();
+    let posY = generarPosicionAleatoria();
+    let tankType = Math.floor((Math.random() * 3) + 1); // numero random (1, 2, 3)
     if(getObject(posX,posY).espacioLibre()){//BARRERA
-        if(tankType == 1)
+        if(tankType === 1)
         {
             setObject(posX,posY, new tankEnemy1(posX,posY,1,this,ENEMY1));// listo
             EnemyList1.push(getObject(posX,posY));
         }
-        else if(tankType == 2){
+        else if(tankType === 2){
             setObject(posX,posY, new tankEnemy2(posX,posY,3,this, ENEMY2));
             EnemyList2y3.push(getObject(posX,posY));
         }
@@ -534,7 +523,7 @@ function addNewEnemy(){
         document.getElementById("txtTanksEnemy").textContent = totalEnemigos;
     }
     else{
-        this.addNewEnemy();
+        addNewEnemy();
     }
 }
 

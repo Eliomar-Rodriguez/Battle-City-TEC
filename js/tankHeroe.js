@@ -40,7 +40,7 @@ class tankHeroe{
     disparar(){
         if(!this._disparo){
             //this.coordinador.ejecutarSonido("SHOOT");
-            this._coordinador.disparar(this._posX,this._posY,this._coordinador.BALAHEROE,this._orientacion);
+            disparar(this._posX,this._posY,BALAHEROE,this._orientacion);
             this._disparo = true;//SE DISPARÓ
             disparo.play();
         }
@@ -54,7 +54,7 @@ class tankHeroe{
 
         if(orientacionActual === ARRIBA){
             this._orientacion = ARRIBA;
-            if(this._coordinador.getObject(this._posX,this._posY-1).espacioLibre()){
+            if(getObject(this._posX,this._posY-1).espacioLibre()){
                 this._posY = this._posY-1;
             }
         }
@@ -82,14 +82,18 @@ class tankHeroe{
 
     eliminar(){
         this._vidas--;
-        bajarVidasHeroe(this._vidas);
-        disparoAHeroe.play();
-        setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
-        if(this._vidas > 1){
+        if(this._vidas > 0){
+            disparoAHeroe.play();
+            setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             this._posX = 7;this._posY = 13;
             this._orientacion = 0;
-            setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
             setObject(this._posX,this._posY,this);
+            document.getElementById("txtVidas").textContent = this._vidas;
+            swal(
+                'Ouch!!',
+                'Una vida menos!!',
+                'error'
+            );
         }
         else if(this._vidas === 0){
             muerteHeroe.play();

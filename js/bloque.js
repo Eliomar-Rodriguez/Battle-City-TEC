@@ -2,7 +2,7 @@
 class bloque{
     constructor(x,y,parteLogica){
         this._coordinador = parteLogica;
-        this._ID = this._coordinador.BLOQUENORMAL;
+        this._ID = BLOQUENORMAL;
         this._posX = x;
         this._posY = y;
     }
@@ -11,7 +11,7 @@ class bloque{
         return this._ID;
     }
     eliminar(){
-        this._coordinador.setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
+        setObject(this._posX,this._posY,new espacioLibre(this._coordinador));
         destruir.play();
     }
     get getPosX(){

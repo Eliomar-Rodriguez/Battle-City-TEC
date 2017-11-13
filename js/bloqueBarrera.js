@@ -2,7 +2,7 @@
 class bloqueBarrera{
     constructor(parteLogica){
         this._coordinador = parteLogica;
-        this._ID = this._coordinador.BORDE;
+        this._ID = BORDE;
     }
 
     get getID(){
